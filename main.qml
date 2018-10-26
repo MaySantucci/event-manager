@@ -3,7 +3,13 @@ import QtQuick.Window 2.2
 
 Window {
     visible: true
-    width: 640
-    height: 480
-    title: qsTr("Hello World")
+    width: 1040
+    height: 680
+    title: qsTr("Event Manager")
+
+    EventManagerPage {
+        anchors.fill: parent
+    }
+
+
 }
