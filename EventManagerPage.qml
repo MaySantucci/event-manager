@@ -15,7 +15,7 @@ Page {
             ToolButton {
                 text: qsTr("Add")
                 font.pixelSize: 18
-                onClicked: loadPage.source = "CRUeventPage.qml"
+                onClicked: loadPage.setSource("CUeventPage.qml", {"name": "", "date": "", "place": "", "price": "", "ticket": ""});
             }
 
             Label {
@@ -55,7 +55,7 @@ Page {
                            id_elem: 0
                            name: "Metallica"
                            date: "21/10/2019"
-                           palce: "Roma"
+                           place: "Roma"
                            price: "100"
                            ticket: "2000"
                        }
@@ -63,7 +63,7 @@ Page {
                            id_elem: 1
                            name: "Colorado"
                            date: "21/11/2019"
-                           palce: "Roma"
+                           place: "Roma"
                            price: "100"
                            ticket: "2000"
                        }
@@ -71,7 +71,7 @@ Page {
                            id_elem: 2
                            name: "Miao"
                            date: "21/10/2020"
-                           palce: "Livorno"
+                           place: "Livorno"
                            price: "100"
                            ticket: "2000"
                        }
@@ -79,7 +79,7 @@ Page {
                            id_elem: 3
                            name: "Bau"
                            date: "21/10/2020"
-                           palce: "Livorno"
+                           place: "Livorno"
                            price: "100"
                            ticket: "2000"
                        }
@@ -87,7 +87,7 @@ Page {
                            id_elem: 4
                            name: "Cra Cra"
                            date: "21/10/2020"
-                           palce: "Livorno"
+                           place: "Livorno"
                            price: "100"
                            ticket: "2000"
                        }
@@ -96,7 +96,7 @@ Page {
                    delegate: ItemDelegate {
                        text:  name
                        width: listEvents.width - listEvents.leftMargin - listEvents.rightMargin
-                       onClicked: loadPage.setSource("EventDetails.qml");
+                       onClicked: loadPage.setSource("EventDetails.qml", {"name": name, "date": date, "place":place, "price": price, "ticket": ticket});
                    }
 
                }
