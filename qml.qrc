@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/">
-    <file>main.qml</file>
-    <file>EventManagerPage.qml</file>
+        <file>main.qml</file>
+        <file>EventManagerPage.qml</file>
+        <file>CRUeventPage.qml</file>
     </qresource>
 </RCC>

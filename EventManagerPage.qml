@@ -5,6 +5,11 @@ import QtQuick.Layouts 1.11
 Page {
     id:root
     //Toolbar
+
+    Loader {
+        id: pageLoader
+    }
+
     header:
         ToolBar {
             id: headerBar
@@ -46,16 +51,57 @@ Page {
                    bottomMargin: 10
                    rightMargin: 10
                    spacing: 10
+                   clip: true
 
-                   model: ["Metallica", "Conca Rock", "Brignano", "Romeo e Giulietta", "Colorado", "Il lago dei cigni"]
+                   model: ListModel {
+                       id:events
+                       ListElement {
+                           name: "Metallica"
+                           date: "21/10/2019"
+                           palce: "Roma"
+                           price: "100"
+                           ticket: "2000"
+                       }
+                       ListElement {
+                           name: "Colorado"
+                           date: "21/11/2019"
+                           palce: "Roma"
+                           price: "100"
+                           ticket: "2000"
+                       }
+                       ListElement {
+                           name: "Miao"
+                           date: "21/10/2020"
+                           palce: "Livorno"
+                           price: "100"
+                           ticket: "2000"
+                       }
+                       ListElement {
+                           name: "Bau"
+                           date: "21/10/2020"
+                           palce: "Livorno"
+                           price: "100"
+                           ticket: "2000"
+                       }
+                       ListElement {
+                           name: "Cra Cra"
+                           date: "21/10/2020"
+                           palce: "Livorno"
+                           price: "100"
+                           ticket: "2000"
+                       }
+                   }
+
                    delegate: ItemDelegate {
-                       text:  modelData
+                       text:  name
                        width: listEvents.width - listEvents.leftMargin - listEvents.rightMargin
                        onClicked: console.log(text)
                    }
 
                }
            }
+
+
            Rectangle {
                border.color: 'teal'
                Layout.fillWidth: true
