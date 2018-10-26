@@ -3,5 +3,6 @@
         <file>main.qml</file>
         <file>EventManagerPage.qml</file>
         <file>CRUeventPage.qml</file>
+        <file>EventDetails.qml</file>
     </qresource>
 </RCC>

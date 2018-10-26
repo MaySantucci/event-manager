@@ -30,4 +30,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     EventManagerPage.qml \
-    CRUeventPage.qml
+    CRUeventPage.qml \
+    EventDetails.qml

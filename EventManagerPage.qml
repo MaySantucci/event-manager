@@ -6,9 +6,6 @@ Page {
     id:root
     //Toolbar
 
-    Loader {
-        id: pageLoader
-    }
 
     header:
         ToolBar {
@@ -18,7 +15,7 @@ Page {
             ToolButton {
                 text: qsTr("Add")
                 font.pixelSize: 18
-                onClicked: console.log(text + " clicked.")
+                onClicked: loadPage.source = "CRUeventPage.qml"
             }
 
             Label {
@@ -54,8 +51,8 @@ Page {
                    clip: true
 
                    model: ListModel {
-                       id:events
                        ListElement {
+                           id_elem: 0
                            name: "Metallica"
                            date: "21/10/2019"
                            palce: "Roma"
@@ -63,6 +60,7 @@ Page {
                            ticket: "2000"
                        }
                        ListElement {
+                           id_elem: 1
                            name: "Colorado"
                            date: "21/11/2019"
                            palce: "Roma"
@@ -70,6 +68,7 @@ Page {
                            ticket: "2000"
                        }
                        ListElement {
+                           id_elem: 2
                            name: "Miao"
                            date: "21/10/2020"
                            palce: "Livorno"
@@ -77,6 +76,7 @@ Page {
                            ticket: "2000"
                        }
                        ListElement {
+                           id_elem: 3
                            name: "Bau"
                            date: "21/10/2020"
                            palce: "Livorno"
@@ -84,6 +84,7 @@ Page {
                            ticket: "2000"
                        }
                        ListElement {
+                           id_elem: 4
                            name: "Cra Cra"
                            date: "21/10/2020"
                            palce: "Livorno"
@@ -95,7 +96,7 @@ Page {
                    delegate: ItemDelegate {
                        text:  name
                        width: listEvents.width - listEvents.leftMargin - listEvents.rightMargin
-                       onClicked: console.log(text)
+                       onClicked: loadPage.setSource("EventDetails.qml");
                    }
 
                }
@@ -103,16 +104,18 @@ Page {
 
 
            Rectangle {
+               id: handleEvent
                border.color: 'teal'
                Layout.fillWidth: true
                Layout.fillHeight: true
                Layout.minimumWidth: 100
 
-               Text {
+               Loader {
+                   id: loadPage
                    anchors.centerIn: parent
-                   text: "Handle event"
                }
            }
+
     }
 
     //footer
@@ -129,4 +132,6 @@ Page {
             }
         }
 }
+
+
 
