@@ -17,7 +17,7 @@ Page {
             ToolButton {
                 text: qsTr("Add")
                 font.pixelSize: 18
-                //onClicked: loadPage.setSource("CUeventPage.qml", {"name": "", "date": "", "place": "", "price": "", "ticket": ""});
+                onClicked: loadPage.setSource("CUeventPage.qml", {"name": "", "date": "", "place": "", "price": "", "ticket": ""});
             }
 
             Label {
@@ -50,14 +50,15 @@ Page {
                    bottomMargin: 10
                    rightMargin: 10
                    spacing: 10
-                   clip: true
+                   clip: true                   
 
                    model: SqlEventModel{}
 
                    delegate: ItemDelegate {
-                       text: model.display
+                       text: model.name
                        width: listEvents.width - listEvents.leftMargin - listEvents.rightMargin
-                       onClicked: loadPage.setSource("EventDetails.qml", {"name": name, "date": date, "place":place, "price": price, "ticket": ticket});
+                       onClicked: loadPage.setSource("EventDetails.qml", {"name": name, "date": date, "place":place,
+                                                         "price": price, "ticket": ticket});
                    }
 
                }

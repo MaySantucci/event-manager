@@ -10,6 +10,7 @@ ColumnLayout {
     property alias price : priceLabel.text
     property alias ticket : ticketLabel.text
 
+
     Label {
         id: nameLabel
     }
@@ -26,10 +27,12 @@ ColumnLayout {
         id: ticketLabel
     }
 
+
     Button {
         id: editButton
         text: "Edit"
-        onClicked:loadPage.setSource("CUeventPage.qml", {"name": name, "date": date, "place":place, "price": price, "ticket": ticket});
+        onClicked:loadPage.setSource("CUeventPage.qml", {"name": name, "date": date, "place":place, "price": price,
+                                         "ticket": ticket});
     }
 
 }

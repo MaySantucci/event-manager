@@ -11,18 +11,25 @@
 
 static void connectToDatabase()
 {
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("events-manager");
-    if(db.open()) {
-        qDebug() << "Connection open";
-        db = QSqlDatabase::database(); // in this way we get the pointer to that database connection
+    QSqlDatabase database = QSqlDatabase::database();
+    if (!database.isValid()) {
+        database = QSqlDatabase::addDatabase("QSQLITE");
+        if (!database.isValid())
+            qFatal("Cannot add database: %s", qPrintable(database.lastError().text()));
+    }
 
-        if(!db.isValid()) {
-            qDebug() << "Db error pointer connection: " << db.lastError();
-        }
-    } else {
-        qFatal("Cannot open database: %s", qPrintable(db.lastError().text()));
-        QFile::remove("events-manager");
+    const QDir writeDir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    if (!writeDir.mkpath("."))
+        qFatal("Failed to create writable directory at %s", qPrintable(writeDir.absolutePath()));
+
+    // Ensure that we have a writable location on all devices.
+    const QString fileName = writeDir.absolutePath() + "/event-manager.sqlite3";
+    qDebug() << fileName;
+    // When using the SQLite driver, open() will create the SQLite database if it doesn't exist.
+    database.setDatabaseName(fileName);
+    if (!database.open()) {
+        qFatal("Cannot open database: %s", qPrintable(database.lastError().text()));
+        QFile::remove(fileName);
     }
 }
 

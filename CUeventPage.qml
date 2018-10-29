@@ -1,18 +1,20 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.4
 import QtQuick.Layouts 1.11
-
+import io.qt.example.eventsmanager 1.0
 ColumnLayout {
     property alias name: nameField.text
     property alias date : dateField.text
     property alias place : placeField.text
-    property string price : priceField.text
-    property string ticket : ticketField.text
+    property alias price : priceField.text
+    property alias ticket : ticketField.text
+
 
     TextField {
         id: nameField
         placeholderText: qsTr("name")
     }
+
     TextField {
         id: dateField
         placeholderText: qsTr("date")
@@ -29,10 +31,17 @@ ColumnLayout {
         id: ticketField
         placeholderText: qsTr("available ticket")
     }
+
+    ComboBox {
+        id: typeEvent
+        model: ["Concert", "Show", "Ballet"]
+    }
+
     RowLayout {
         Button {
             id: save
             text: "Save"
+           // onClicked:SqlEventModel.saveEvent(name, date, place, price, ticket, typeEvent.currentText );
         }
 
         Button {
