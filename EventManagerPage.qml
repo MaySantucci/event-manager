@@ -58,7 +58,7 @@ Page {
                        text: model.name
                        width: listEvents.width - listEvents.leftMargin - listEvents.rightMargin
                        onClicked: loadPage.setSource("EventDetails.qml", {"name": name, "date": date, "place":place,
-                                                         "price": price, "ticket": ticket});
+                                                         "price": price, "ticket": ticket, "type_event": type_event});
                    }
 
                }

@@ -73,14 +73,12 @@ QHash<int, QByteArray> SqlEventModel::roleNames() const {
     names[Qt::UserRole + 3] = "place";
     names[Qt::UserRole + 4] = "price";
     names[Qt::UserRole + 5] = "ticket";
-    /*
-    names[Qt::UserRole + 7] = "type_event";
-    names[Qt::UserRole + 8] = "artist";
-    names[Qt::UserRole + 9] = "genre";
-    names[Qt::UserRole + 10] = "first_dancer";
-    names[Qt::UserRole + 11] = "number_dancers";
-    names[Qt::UserRole + 12] = "director";
-    */
+    names[Qt::UserRole + 6] = "type_event";
+    names[Qt::UserRole + 7] = "artist";
+    names[Qt::UserRole + 8] = "genre";
+    names[Qt::UserRole + 9] = "first_dancer";
+    names[Qt::UserRole + 10] = "number_dancers";
+    names[Qt::UserRole + 11] = "director";
    return names;
 }
 

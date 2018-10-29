@@ -8,6 +8,7 @@ ColumnLayout {
     property alias place : placeField.text
     property alias price : priceField.text
     property alias ticket : ticketField.text
+    property alias type_event : typeEvent.displayText
 
 
     TextField {
