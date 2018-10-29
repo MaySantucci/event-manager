@@ -8,8 +8,7 @@ ColumnLayout {
     property alias place : placeField.text
     property alias price : priceField.text
     property alias ticket : ticketField.text
-    property alias type_event : typeEvent.displayText
-
+    property string type
 
     TextField {
         id: nameField
@@ -34,15 +33,21 @@ ColumnLayout {
     }
 
     ComboBox {
-        id: typeEvent
+        id: typeCombo
         model: ["Concert", "Show", "Ballet"]
+        onActivated: {
+            type = currentText;
+        }
+        Component.onCompleted: {
+            currentIndex = find(type);
+        }
     }
 
     RowLayout {
         Button {
             id: save
             text: "Save"
-           // onClicked:SqlEventModel.saveEvent(name, date, place, price, ticket, typeEvent.currentText );
+            //onClicked:SqlEventModel.saveEvent(name, date, place, price, ticket, typeEvent.displayText );
         }
 
         Button {
