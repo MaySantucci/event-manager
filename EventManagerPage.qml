@@ -2,6 +2,8 @@ import QtQuick 2.0
 import QtQuick.Controls 2.4
 import QtQuick.Layouts 1.11
 
+import io.qt.example.eventsmanager 1.0
+
 Page {
     id:root
     //Toolbar
@@ -15,7 +17,7 @@ Page {
             ToolButton {
                 text: qsTr("Add")
                 font.pixelSize: 18
-                onClicked: loadPage.setSource("CUeventPage.qml", {"name": "", "date": "", "place": "", "price": "", "ticket": ""});
+                //onClicked: loadPage.setSource("CUeventPage.qml", {"name": "", "date": "", "place": "", "price": "", "ticket": ""});
             }
 
             Label {
@@ -50,51 +52,10 @@ Page {
                    spacing: 10
                    clip: true
 
-                   model: ListModel {
-                       ListElement {
-                           id_elem: 0
-                           name: "Metallica"
-                           date: "21/10/2019"
-                           place: "Roma"
-                           price: "100"
-                           ticket: "2000"
-                       }
-                       ListElement {
-                           id_elem: 1
-                           name: "Colorado"
-                           date: "21/11/2019"
-                           place: "Roma"
-                           price: "100"
-                           ticket: "2000"
-                       }
-                       ListElement {
-                           id_elem: 2
-                           name: "Miao"
-                           date: "21/10/2020"
-                           place: "Livorno"
-                           price: "100"
-                           ticket: "2000"
-                       }
-                       ListElement {
-                           id_elem: 3
-                           name: "Bau"
-                           date: "21/10/2020"
-                           place: "Livorno"
-                           price: "100"
-                           ticket: "2000"
-                       }
-                       ListElement {
-                           id_elem: 4
-                           name: "Cra Cra"
-                           date: "21/10/2020"
-                           place: "Livorno"
-                           price: "100"
-                           ticket: "2000"
-                       }
-                   }
+                   model: SqlEventModel{}
 
                    delegate: ItemDelegate {
-                       text:  name
+                       text: model.display
                        width: listEvents.width - listEvents.leftMargin - listEvents.rightMargin
                        onClicked: loadPage.setSource("EventDetails.qml", {"name": name, "date": date, "place":place, "price": price, "ticket": ticket});
                    }
