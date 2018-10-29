@@ -4,31 +4,26 @@ import QtQuick.Layouts 1.11
 
 ColumnLayout {
 
-    property string name
-    property string date
-    property string place
-    property string price
-    property string ticket
+    property alias name : nameLabel.text
+    property alias date : dateLabel.text
+    property alias place : placeLabel.text
+    property alias price : priceLabel.text
+    property alias ticket : ticketLabel.text
 
     Label {
         id: nameLabel
-        text: name
     }
     Label {
         id: dateLabel
-        text: date
     }
     Label {
         id: placeLabel
-        text: place
     }
     Label {
         id: priceLabel
-        text: price
     }
     Label {
         id: ticketLabel
-        text: ticket
     }
 
     Button {
