@@ -15,27 +15,24 @@ static void createTable()
     QSqlQuery query;
     if (!query.exec(
         "CREATE TABLE IF NOT EXISTS 'Events' ("
-        "   'code' INTEGER AUTO_INCREMENT NOT NULL DEFAULT 0,"
+        "   'code' INTEGER PRIMARY KEY,"
         "   'name' TEXT NOT NULL,"
         "   'date' DATE NOT NULL,"
         "   'place' TEXT NOT NULL,"
         "   'price' TEXT NOT NULL,"
         "   'ticket' TEXT NOT NULL,"
         "   'type_event' TEXT NOT NULL,"
-        "   'artist' TEXT,"
-        "   'genre' TEXT,"
-        "   'first_dancer' TEXT,"
-        "   'number_dancers' TEXT,"
-        "   'director' TEXT,"
-
-        "   PRIMARY KEY(code)"
+        "   'artist' TEXT DEFAULT 0,"
+        "   'genre' TEXT DEFAULT 0,"
+        "   'first_dancer' TEXT DEFAULT 0,"
+        "   'number_dancers' TEXT DEFAULT 0,"
+        "   'director' TEXT DEFAULT 0"
         ")")) {
         qFatal("Failed to query database: %s", qPrintable(query.lastError().text()));
     }
 
-    query.exec("INSERT INTO Events VALUES(0, 'Milano Rock', '08-05-2019', 'Milano', '90.00', '120000', 'Concert', 'Metallica', 'Metal', NULL, NULL, NULL)");
-    query.exec("INSERT INTO Events VALUES(1, 'Romeo e Giulietta', '08-05-2019', 'Parma', '50.00', '1200', 'Ballet', NULL, NULL, 'Bolle', '50', NULL)");
-    query.exec("INSERT INTO Events VALUES(2, 'Colorado', '08-05-2019', 'Roma', '25.00', '1200', 'Show', NULL, NULL, NULL, NULL, 'Ettore')");
+
+    qDebug() << "Database created.";
 }
 
 SqlEventModel::SqlEventModel(QObject *parent) :
@@ -53,7 +50,6 @@ SqlEventModel::SqlEventModel(QObject *parent) :
         qFatal("Cannot set query on SqlEventModel: %s", qPrintable(lastError().text()));
     }
 
-    qDebug() << "Database created.";
 }
 
 
@@ -82,29 +78,51 @@ QHash<int, QByteArray> SqlEventModel::roleNames() const {
    return names;
 }
 
-void SqlEventModel::saveEvent(const QString &name, const QString &date, const QString &place,
+
+void SqlEventModel::addEvent(const QString &name, const QString &date, const QString &place,
                const QString &price, const QString &ticket, const QString &type_event,
                const QString &artist, const QString &genre, const QString &first_dancer,
                               const QString &number_dancers, const QString &director) {
 
-    QSqlRecord newRecord = record();
-    newRecord.setValue("name", name);
-    newRecord.setValue("date", date);
-    newRecord.setValue("place", place);
-    newRecord.setValue("price", price);
-    newRecord.setValue("ticket", ticket);
-    newRecord.setValue("type_event", type_event);
-    newRecord.setValue("artist", artist);
-    newRecord.setValue("genre", genre);
-    newRecord.setValue("first_dancer", first_dancer);
-    newRecord.setValue("number_dancers", number_dancers);
-    newRecord.setValue("director", director);
+    QSqlQuery qry;
 
-    if (!insertRecord(rowCount(), newRecord)) {
-            qWarning() << "Failed to send message:" << lastError().text();
-            return;
-        }
+         qry.prepare("INSERT INTO Events(name, date, place, price, ticket, type_event, artist, genre, first_dancer, number_dancers, director)"
+                     "VALUES(:name, :date, :place, :price, :ticket, :type_event, :artist, :genre, :first_dancer, :number_dancers, :director)");
+
+         qry.bindValue(":name", name);
+         qry.bindValue(":date", date);
+         qry.bindValue(":place",place);
+         qry.bindValue(":price",price);
+         qry.bindValue(":ticket",ticket);
+         qry.bindValue(":type_event",type_event);
+         qry.bindValue(":artist",artist);
+         qry.bindValue(":genre",genre);
+         qry.bindValue(":first_dancer",first_dancer);
+         qry.bindValue(":number_dancers",number_dancers);
+         qry.bindValue(":director",director);
+
+         if( !qry.exec() ) {
+             qDebug() << qry.lastError().text();
+         } else {
+             qDebug() << "Inserted!";
+         }
+
 
 }
+
+
+void SqlEventModel::saveEvent(const int &code, const QString &name, const QString &date, const QString &place,
+               const QString &price, const QString &ticket, const QString &type_event,
+               const QString &artist, const QString &genre, const QString &first_dancer,
+                              const QString &number_dancers, const QString &director) {
+
+    //take code and check if it is in db. if exists set/replace the values.
+    addEvent(name, date, place, price, ticket, type_event, artist, genre, first_dancer, number_dancers, director);
+}
+
+int SqlEventModel::getCodeElem () {
+    return codeElem;
+}
+
 
 

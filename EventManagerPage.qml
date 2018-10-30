@@ -52,12 +52,12 @@ Page {
                    spacing: 10
                    clip: true                   
 
-                   model: SqlEventModel{}
+                   model: myDb
 
                    delegate: ItemDelegate {
                        text: model.name
                        width: listEvents.width - listEvents.leftMargin - listEvents.rightMargin
-                       onClicked: loadPage.setSource("EventDetails.qml", {"name": name, "date": date, "place":place,
+                       onClicked: loadPage.setSource("EventDetails.qml", {"code": code, "name": name, "date": date, "place":place,
                                                          "price": price, "ticket": ticket, "type": type_event});
                    }
 

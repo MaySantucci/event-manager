@@ -5,6 +5,7 @@
 #include <QStandardPaths>
 #include <QDebug>
 #include <QSqlError>
+#include <QQmlContext>
 
 
 #include "sqleventmodel.h"
@@ -42,6 +43,8 @@ int main(int argc, char *argv[])
     connectToDatabase();
 
     QQmlApplicationEngine engine;
+    SqlEventModel myDb;
+    engine.rootContext()->setContextProperty("myDb", &myDb);
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())
         return -1;

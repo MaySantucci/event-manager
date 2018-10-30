@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.11
 
 ColumnLayout {
 
+    property alias code : codeLabel.text
     property alias name : nameLabel.text
     property alias date : dateLabel.text
     property alias place : placeLabel.text
@@ -12,6 +13,9 @@ ColumnLayout {
     property alias type : typeLabel.text
 
 
+    Label {
+        id: codeLabel
+    }
     Label {
         id: nameLabel
     }
@@ -34,7 +38,7 @@ ColumnLayout {
     Button {
         id: editButton
         text: "Edit"
-        onClicked:loadPage.setSource("CUeventPage.qml", {"name": name, "date": date, "place":place, "price": price,
+        onClicked:loadPage.setSource("CUeventPage.qml", {"code": code, "name": name, "date": date, "place":place, "price": price,
                                          "ticket": ticket, "type": type});
     }
 
