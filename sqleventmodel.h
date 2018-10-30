@@ -22,12 +22,10 @@ public:
                                const QString &artist = "", const QString &genre = "", const QString &first_dancer = "",
                                const QString &number_dancers = "", const QString &director = "");
 
-    Q_INVOKABLE int getCodeElem ();
-
-    void setCodeElem(const int value);
-
-private:
-    int codeElem;
+               void updateEvent(const int &code, const QString &name, const QString &date, const QString &place,
+                               const QString &price, const QString &ticket, const QString &type_event,
+                               const QString &artist = "", const QString &genre = "", const QString &first_dancer = "",
+                               const QString &number_dancers = "", const QString &director = "");
 
 };
 
