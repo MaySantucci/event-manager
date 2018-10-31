@@ -52,7 +52,11 @@ ColumnLayout {
         Button {
             id: save
             text: "Save"
-            onClicked:myDb.saveEvent(code, name, date, place, price, ticket, type)
+            onClicked: {
+                myDb.saveEvent(code, name, date, place, price, ticket, type);
+                loadPage.setSource("EventDetails.qml", {"code": code, "name": name, "date": date, "place":place, "price": price,
+                                                         "ticket": ticket, "type": type});
+            }
         }
 
         Button {

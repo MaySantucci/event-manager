@@ -60,7 +60,6 @@ Page {
                        onClicked: loadPage.setSource("EventDetails.qml", {"code": code, "name": name, "date": date, "place":place,
                                                          "price": price, "ticket": ticket, "type": type_event});
                    }
-
                }
            }
 
