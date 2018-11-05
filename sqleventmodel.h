@@ -33,6 +33,8 @@ public:
                    const QString &genre = "", const QString &first_dancer = "",
                    const QString &number_dancers = "",
                    const QString &director = "");
+
+  Q_INVOKABLE void removeEvent(int index, const int &code);
 };
 
 #endif // SQLEVENTMODEL_H

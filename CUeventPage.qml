@@ -50,7 +50,6 @@ ColumnLayout {
         }
     }
 
-    RowLayout {
         Button {
             id: save
             text: "Save"
@@ -61,12 +60,6 @@ ColumnLayout {
             }
         }
 
-        Button {
-            id: remove
-            text: "Remove"
-        }
-
-    }
 }
 
 

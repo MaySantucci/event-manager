@@ -32,7 +32,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 DISTFILES += \
     EventManagerPage.qml \
     EventDetails.qml \
-    CUeventPage.qml
+    CUeventPage.qml \
+    removeItemPopup.qml
 
 HEADERS += \
     sqleventmodel.h

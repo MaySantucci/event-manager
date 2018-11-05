@@ -4,5 +4,6 @@
         <file>EventManagerPage.qml</file>
         <file>CUeventPage.qml</file>
         <file>EventDetails.qml</file>
+        <file>removeItemPopup.qml</file>
     </qresource>
 </RCC>

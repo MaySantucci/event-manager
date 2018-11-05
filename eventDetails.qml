@@ -36,11 +36,19 @@ ColumnLayout {
         id: typeLabel
     }
 
-    Button {
-        id: editButton
-        text: "Edit"
-        onClicked:loadPage.setSource("CUeventPage.qml", {"index": index, "code": code, "name": name, "date": date, "place":place, "price": price,
-                                         "ticket": ticket, "type": type});
+    RowLayout {
+        Button {
+            id: editButton
+            text: "Edit"
+            onClicked:loadPage.setSource("CUeventPage.qml", {"index": index, "code": code, "name": name, "date": date, "place":place, "price": price,
+                                             "ticket": ticket, "type": type});
+        }
+
+        Button {
+            id: remove
+            text: "Remove"
+            onClicked: loadPage.setSource("removeItemPopup.qml", {"index": index, "code": code});
+        }
     }
 
 }

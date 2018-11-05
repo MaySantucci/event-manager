@@ -123,11 +123,10 @@ void SqlEventModel::updateEvent(int index, const int &code, const QString &name,
   qry.bindValue(":number_dancers", number_dancers);
   qry.bindValue(":director", director);
 
-  QModelIndex i = createIndex(index, 0);
-  QVector<int> value;
-
   if (qry.exec()) {
     qDebug() << "Query done.";
+    QModelIndex i = createIndex(index, 0);
+    QVector<int> value;
     dataChanged(i, i, value);
   } else {
     qDebug() << "Error: " << lastError().text();
@@ -151,4 +150,17 @@ void SqlEventModel::saveEvent(int index, const int &code, const QString &name,
     updateEvent(index, code, name, date, place, price, ticket, type_event,
                 artist, genre, first_dancer, number_dancers, director);
   }
+}
+
+void SqlEventModel::removeEvent(int index, const int &code) {
+  qDebug() << "Remove Element." << index << " - " << code;
+
+  beginRemoveRows(QModelIndex(), index, index);
+
+  if (removeRow(index)) {
+    qDebug() << "Element removed.";
+  } else {
+    qDebug() << lastError().text();
+  }
+  endRemoveRows();
 }
