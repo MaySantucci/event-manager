@@ -12,6 +12,11 @@ ColumnLayout {
     property alias price : priceField.text
     property alias ticket : ticketField.text
     property string type
+    property alias artist: artistField.text
+    property alias genre: genreField.text
+    property alias first_dancer: firstDancerField.text
+    property alias number_dancers: numberDancersField.text
+    property alias director: directorField.text
 
     Label {
         id: codeField
@@ -44,22 +49,97 @@ ColumnLayout {
         model: ["Concert", "Show", "Ballet"]
         onActivated: {
             type = currentText;
+            if(type == "Concert"){
+                artistField.visible = true;
+                genreField.visible = true;
+                firstDancerField.visible = false;
+                numberDancersField.visible = false;
+                directorField.visible = false;
+            } else if (type == "Show") {
+                artistField.visible = false;
+                genreField.visible = false;
+                firstDancerField.visible = false;
+                numberDancersField.visible = false;
+                directorField.visible = true;
+            } else if (type == "Ballet") {
+                artistField.visible = false;
+                genreField.visible = false;
+                firstDancerField.visible = true;
+                numberDancersField.visible = true;
+                directorField.visible = false;
+            }
         }
         Component.onCompleted: {
             currentIndex = find(type);
+            if(type == "Concert"){
+                artistField.visible = true;
+                genreField.visible = true;
+                firstDancerField.visible = false;
+                numberDancersField.visible = false;
+                directorField.visible = false;
+            } else if (type == "Show") {
+                artistField.visible = false;
+                genreField.visible = false;
+                firstDancerField.visible = false;
+                numberDancersField.visible = false;
+                directorField.visible = true;
+            } else if (type == "Ballet") {
+                artistField.visible = false;
+                genreField.visible = false;
+                firstDancerField.visible = true;
+                numberDancersField.visible = true;
+                directorField.visible = false;
+            }
         }
-    }
+    }    
 
+    TextField {
+        id: artistField
+        placeholderText: qsTr("artist")
+        visible: false
+    }
+    TextField {
+        id: genreField
+        placeholderText: qsTr("genre")
+        visible: false
+    }
+    TextField {
+        id: firstDancerField
+        placeholderText: qsTr("first dancer")
+        visible: false
+    }
+    TextField {
+        id: numberDancersField
+        placeholderText: qsTr("number dancers")
+        visible: false
+    }
+    TextField {
+        id: directorField
+        placeholderText: qsTr("director")
+        visible: false
+    }
+    RowLayout {
         Button {
             id: save
             text: "Save"
             onClicked: {
-                myDb.saveEvent(root.index, root.code, root.name, root.date, root.place, root.price, root.ticket, root.type);
+                myDb.saveEvent(root.index, root.code, root.name, root.date, root.place, root.price,
+                               root.ticket, root.type, root.artist, root.genre, root.first_dancer,
+                               root.number_dancers, root.director);
                 loadPage.setSource("EventDetails.qml", {"code": code, "name": name, "date": date, "place":place, "price": price,
-                                                         "ticket": ticket, "type": type});
+                                                        "ticket": ticket, "type": type, "artist": artist, "genre": genre,
+                                                        "first_dancer": first_dancer, "number_dancers": number_dancers,
+                                                        "director": director});
             }
         }
-
+        Button {
+            id: undo
+            text: "Cancel"
+            onClicked: {
+                loadPage.setSource("EventDetails.qml");
+            }
+        }
+    }
 }
 
 

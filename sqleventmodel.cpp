@@ -67,15 +67,16 @@ QHash<int, QByteArray> SqlEventModel::roleNames() const {
   return names;
 }
 
-void SqlEventModel::addEvent(const QString &name, const QString &date,
-                             const QString &place, const QString &price,
-                             const QString &ticket, const QString &type_event,
-                             const QString &artist, const QString &genre,
-                             const QString &first_dancer,
+void SqlEventModel::addEvent(int index, const QString &name,
+                             const QString &date, const QString &place,
+                             const QString &price, const QString &ticket,
+                             const QString &type_event, const QString &artist,
+                             const QString &genre, const QString &first_dancer,
                              const QString &number_dancers,
                              const QString &director) {
   QSqlRecord newRecord = record();
   newRecord.setValue("name", name);
+  qDebug() << artist;
   newRecord.setValue("date", date);
   newRecord.setValue("place", place);
   newRecord.setValue("price", price);
@@ -87,7 +88,10 @@ void SqlEventModel::addEvent(const QString &name, const QString &date,
   newRecord.setValue("number_dancers", number_dancers);
   newRecord.setValue("director", director);
 
-  if (!insertRecord(-1, newRecord)) {
+  if (insertRecord(-1, newRecord)) {
+    qDebug() << "Data changed";
+
+  } else {
     qWarning() << "Failed to save event:" << lastError().text();
     return;
   }
@@ -141,10 +145,9 @@ void SqlEventModel::saveEvent(int index, const int &code, const QString &name,
                               const QString &genre, const QString &first_dancer,
                               const QString &number_dancers,
                               const QString &director) {
-
-  // take code and check if it is in db. if exists set/replace the values.
   if (code == NULL) {
-    addEvent(name, date, place, price, ticket, type_event, artist, genre,
+    qDebug() << artist;
+    addEvent(index, name, date, place, price, ticket, type_event, artist, genre,
              first_dancer, number_dancers, director);
   } else {
     updateEvent(index, code, name, date, place, price, ticket, type_event,

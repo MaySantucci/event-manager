@@ -17,7 +17,9 @@ Page {
             ToolButton {
                 text: qsTr("Add")
                 font.pixelSize: 18
-                onClicked: loadPage.setSource("CUeventPage.qml", {"name": "", "date": "", "place": "", "price": "", "ticket": ""});
+                onClicked: {
+                    loadPage.setSource("CUeventPage.qml", {"name": "", "date": "", "place": "", "price": "", "ticket": ""});
+                }
             }
 
             Label {
@@ -57,8 +59,11 @@ Page {
                    delegate: ItemDelegate {
                        text: model.name
                        width: listEvents.width - listEvents.leftMargin - listEvents.rightMargin
-                       onClicked: loadPage.setSource("EventDetails.qml", {"index": index, "code": code, "name": name, "date": date, "place":place,
-                                                         "price": price, "ticket": ticket, "type": type_event});
+                       onClicked: {
+                           loadPage.setSource("EventDetails.qml", {"index": index, "code": code, "name": name, "date": date, "place":place,
+                                                     "price": price, "ticket": ticket, "type": type_event, "artist": artist, "genre": genre,
+                                                     "first_dancer": first_dancer, "number_dancers": number_dancers, "director": director});
+                       }
                    }
                }
            }
