@@ -87,8 +87,6 @@ void SqlEventModel::addEvent(const QString &name, const QString &date,
   newRecord.setValue("number_dancers", number_dancers);
   newRecord.setValue("director", director);
 
-  qDebug() << newRecord;
-
   if (!insertRecord(-1, newRecord)) {
     qWarning() << "Failed to save event:" << lastError().text();
     return;
@@ -96,7 +94,7 @@ void SqlEventModel::addEvent(const QString &name, const QString &date,
   submitAll();
 }
 
-void SqlEventModel::updateEvent(const int &code, const QString &name,
+void SqlEventModel::updateEvent(int index, const int &code, const QString &name,
                                 const QString &date, const QString &place,
                                 const QString &price, const QString &ticket,
                                 const QString &type_event,
@@ -105,45 +103,39 @@ void SqlEventModel::updateEvent(const int &code, const QString &name,
                                 const QString &number_dancers,
                                 const QString &director) {
 
-  QString codeString = QString::number(code);
+  QSqlQuery qry;
+  qry.prepare("UPDATE Events SET name = :name, date = :date, place = :place,"
+              "price = :price, ticket = :ticket, type_event = :type_event, "
+              "artist = :artist, genre = :genre, first_dancer = :first_dancer, "
+              "number_dancers = :number_dancers, director =:director WHERE "
+              "code =:code");
 
-  QSqlQuery qry("SELECT * FROM Events WHERE code =" + codeString);
-  QSqlRecord upRecord = qry.record();
-  if (upRecord.isEmpty()) {
-    qDebug() << "no record found.";
+  qry.bindValue(":code", code);
+  qry.bindValue(":name", name);
+  qry.bindValue(":date", date);
+  qry.bindValue(":place", place);
+  qry.bindValue(":price", price);
+  qry.bindValue(":ticket", ticket);
+  qry.bindValue(":type_event", type_event);
+  qry.bindValue(":artist", artist);
+  qry.bindValue(":genre", genre);
+  qry.bindValue(":first_dancer", first_dancer);
+  qry.bindValue(":number_dancers", number_dancers);
+  qry.bindValue(":director", director);
+
+  QModelIndex i = createIndex(index, 0);
+  QVector<int> value;
+
+  if (qry.exec()) {
+    qDebug() << "Query done.";
+    dataChanged(i, i, value);
   } else {
-    qDebug() << "record found.";
-    QSqlQuery updateQry;
-    updateQry.prepare(
-        "UPDATE Events SET name = :name, date = :date, place = :place,"
-        "price = :price, ticket = :ticket, type_event = :type_event, artist = "
-        ":artist, "
-        "genre = :genre, first_dancer = :first_dancer, number_dancers = "
-        ":number_dancers, "
-        "director = :director WHERE code =" +
-        codeString);
-
-    updateQry.bindValue(":name", name);
-    updateQry.bindValue(":date", date);
-    updateQry.bindValue(":place", place);
-    updateQry.bindValue(":price", price);
-    updateQry.bindValue(":ticket", ticket);
-    updateQry.bindValue(":type_event", type_event);
-    updateQry.bindValue(":artist", artist);
-    updateQry.bindValue(":genre", genre);
-    updateQry.bindValue(":first_dancer", first_dancer);
-    updateQry.bindValue(":number_dancers", number_dancers);
-    updateQry.bindValue(":director", director);
-
-    if (!updateQry.exec()) {
-      qDebug() << updateQry.lastError().text();
-    } else {
-      qDebug() << "Updated!";
-    }
+    qDebug() << "Error: " << lastError().text();
   }
+  submitAll();
 }
 
-void SqlEventModel::saveEvent(const int &code, const QString &name,
+void SqlEventModel::saveEvent(int index, const int &code, const QString &name,
                               const QString &date, const QString &place,
                               const QString &price, const QString &ticket,
                               const QString &type_event, const QString &artist,
@@ -156,7 +148,7 @@ void SqlEventModel::saveEvent(const int &code, const QString &name,
     addEvent(name, date, place, price, ticket, type_event, artist, genre,
              first_dancer, number_dancers, director);
   } else {
-    updateEvent(code, name, date, place, price, ticket, type_event, artist,
-                genre, first_dancer, number_dancers, director);
+    updateEvent(index, code, name, date, place, price, ticket, type_event,
+                artist, genre, first_dancer, number_dancers, director);
   }
 }

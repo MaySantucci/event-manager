@@ -3,6 +3,8 @@ import QtQuick.Controls 2.4
 import QtQuick.Layouts 1.11
 import io.qt.example.eventsmanager 1.0
 ColumnLayout {
+    id: root
+    property int index
     property alias code: codeField.text
     property alias name: nameField.text
     property alias date : dateField.text
@@ -53,7 +55,7 @@ ColumnLayout {
             id: save
             text: "Save"
             onClicked: {
-                myDb.saveEvent(code, name, date, place, price, ticket, type);
+                myDb.saveEvent(root.index, root.code, root.name, root.date, root.place, root.price, root.ticket, root.type);
                 loadPage.setSource("EventDetails.qml", {"code": code, "name": name, "date": date, "place":place, "price": price,
                                                          "ticket": ticket, "type": type});
             }

@@ -57,7 +57,7 @@ Page {
                    delegate: ItemDelegate {
                        text: model.name
                        width: listEvents.width - listEvents.leftMargin - listEvents.rightMargin
-                       onClicked: loadPage.setSource("EventDetails.qml", {"code": code, "name": name, "date": date, "place":place,
+                       onClicked: loadPage.setSource("EventDetails.qml", {"index": index, "code": code, "name": name, "date": date, "place":place,
                                                          "price": price, "ticket": ticket, "type": type_event});
                    }
                }
