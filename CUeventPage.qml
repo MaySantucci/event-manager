@@ -5,7 +5,7 @@ import io.qt.example.eventsmanager 1.0
 ColumnLayout {
     id: root
     property int index
-    property alias code: codeField.text
+    property int code: -1
     property alias name: nameField.text
     property alias date : dateField.text
     property alias place : placeField.text
@@ -20,7 +20,8 @@ ColumnLayout {
 
     Label {
         id: codeField
-        text: qsTr("code")
+        text: root.code
+        visible: root.code > 0
     }
     TextField {
         id: nameField
@@ -123,9 +124,18 @@ ColumnLayout {
             id: save
             text: "Save"
             onClicked: {
-                myDb.saveEvent(root.index, root.code, root.name, root.date, root.place, root.price,
-                               root.ticket, root.type, root.artist, root.genre, root.first_dancer,
-                               root.number_dancers, root.director);
+
+                if(root.code < 0) {
+                   root.code = myDb.addEvent( root.name, root.date, root.place, root.price,
+                                   root.ticket, root.type, root.artist, root.genre, root.first_dancer,
+                                   root.number_dancers, root.director);
+
+                } else {
+                    myDb.updateEvent(root.index, root.code, root.name, root.date, root.place, root.price,
+                                     root.ticket, root.type, root.artist, root.genre, root.first_dancer,
+                                     root.number_dancers, root.director);
+                }
+
                 loadPage.setSource("EventDetails.qml", {"code": code, "name": name, "date": date, "place":place, "price": price,
                                                         "ticket": ticket, "type": type, "artist": artist, "genre": genre,
                                                         "first_dancer": first_dancer, "number_dancers": number_dancers,

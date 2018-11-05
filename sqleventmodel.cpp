@@ -67,13 +67,13 @@ QHash<int, QByteArray> SqlEventModel::roleNames() const {
   return names;
 }
 
-void SqlEventModel::addEvent(int index, const QString &name,
-                             const QString &date, const QString &place,
-                             const QString &price, const QString &ticket,
-                             const QString &type_event, const QString &artist,
-                             const QString &genre, const QString &first_dancer,
-                             const QString &number_dancers,
-                             const QString &director) {
+int SqlEventModel::addEvent(const QString &name, const QString &date,
+                            const QString &place, const QString &price,
+                            const QString &ticket, const QString &type_event,
+                            const QString &artist, const QString &genre,
+                            const QString &first_dancer,
+                            const QString &number_dancers,
+                            const QString &director) {
   QSqlRecord newRecord = record();
   newRecord.setValue("name", name);
   qDebug() << artist;
@@ -93,9 +93,15 @@ void SqlEventModel::addEvent(int index, const QString &name,
 
   } else {
     qWarning() << "Failed to save event:" << lastError().text();
-    return;
+    return -1;
   }
   submitAll();
+  QSqlQuery qry;
+  qry.prepare("SELECT code FROM Events");
+  if (!qry.exec()) {
+    return -1;
+  }
+  return qry.lastInsertId().toInt();
 }
 
 void SqlEventModel::updateEvent(int index, const int &code, const QString &name,
@@ -136,23 +142,6 @@ void SqlEventModel::updateEvent(int index, const int &code, const QString &name,
     qDebug() << "Error: " << lastError().text();
   }
   submitAll();
-}
-
-void SqlEventModel::saveEvent(int index, const int &code, const QString &name,
-                              const QString &date, const QString &place,
-                              const QString &price, const QString &ticket,
-                              const QString &type_event, const QString &artist,
-                              const QString &genre, const QString &first_dancer,
-                              const QString &number_dancers,
-                              const QString &director) {
-  if (code == NULL) {
-    qDebug() << artist;
-    addEvent(index, name, date, place, price, ticket, type_event, artist, genre,
-             first_dancer, number_dancers, director);
-  } else {
-    updateEvent(index, code, name, date, place, price, ticket, type_event,
-                artist, genre, first_dancer, number_dancers, director);
-  }
 }
 
 void SqlEventModel::removeEvent(int index) {
