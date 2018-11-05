@@ -47,7 +47,7 @@ ColumnLayout {
         Button {
             id: remove
             text: "Remove"
-            onClicked: loadPage.setSource("removeItemPopup.qml", {"index": index, "code": code});
+            onClicked: loadPage.setSource("removeItemPopup.qml", {"index": index});
         }
     }
 

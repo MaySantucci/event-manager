@@ -152,8 +152,7 @@ void SqlEventModel::saveEvent(int index, const int &code, const QString &name,
   }
 }
 
-void SqlEventModel::removeEvent(int index, const int &code) {
-  qDebug() << "Remove Element." << index << " - " << code;
+void SqlEventModel::removeEvent(int index) {
 
   beginRemoveRows(QModelIndex(), index, index);
 
@@ -163,4 +162,5 @@ void SqlEventModel::removeEvent(int index, const int &code) {
     qDebug() << lastError().text();
   }
   endRemoveRows();
+  submitAll();
 }

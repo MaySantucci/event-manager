@@ -1,26 +1,29 @@
 import QtQuick 2.2
 import QtQuick.Dialogs 1.1
+import QtQuick.Controls 2.4
 
-MessageDialog {
+Dialog {
     id: messageDialog
 
     property int index
-    property int code
 
     title: "Remove item"
-    text: "Are you sure to remove this item? "
+
+    Label {
+        text: "Are you sure to remove this item? "
+        anchors.centerIn: parent
+    }
 
     standardButtons: StandardButton.Yes | StandardButton.No
 
     Component.onCompleted: visible = true
 
-    onYes: {
-        console.log("Remove element.")
+    onAccepted: {
         myDb.removeEvent(messageDialog.index, messageDialog.code);
 
         messageDialog.close();
     }
-    onNo: {
+    onRejected: {
         messageDialog.close();
     }
 

@@ -34,7 +34,7 @@ public:
                    const QString &number_dancers = "",
                    const QString &director = "");
 
-  Q_INVOKABLE void removeEvent(int index, const int &code);
+  Q_INVOKABLE void removeEvent(int index);
 };
 
 #endif // SQLEVENTMODEL_H
