@@ -11,7 +11,7 @@ ColumnLayout {
     property alias place : placeField.text
     property alias price : priceField.text
     property alias ticket : ticketField.text
-    property string type
+    property string type : ""
     property alias artist: artistField.text
     property alias genre: genreField.text
     property alias first_dancer: firstDancerField.text
@@ -149,7 +149,13 @@ RowLayout {
             }
         }
         Component.onCompleted: {
-            currentIndex = find(root.type);
+            if(root.type === "") {
+                currentIndex = typeCombo.find("Concert");
+                activated(currentIndex);
+            } else {
+                currentIndex = find(root.type);
+            }
+
             if(root.type === "Concert"){
                 artistField.visible = true;
                 genreField.visible = true;
@@ -273,7 +279,12 @@ RowLayout {
             id: undo
             text: "Cancel"
             onClicked: {
-                loadPage.setSource("EventDetails.qml");
+                if(root.name.trim() != "" && root.date.trim() != "" && root.place.trim() != "" && root.price.trim() != "" && root.ticket.trim() != ""
+                        && root.type.trim() != "") {
+                    loadPage.setSource("EventDetails.qml");
+                } else {
+                    console.log("Torna alla pagina iniziale.");
+                }
             }
         }
     }

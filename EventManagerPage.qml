@@ -68,7 +68,6 @@ Page {
                }
            }
 
-
            Rectangle {
                id: handleEvent
                border.color: 'teal'
