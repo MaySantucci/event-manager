@@ -44,6 +44,13 @@ ColumnLayout {
         id: ticketField
         placeholderText: qsTr("available ticket")
     }
+RowLayout {
+    Label {
+        id: requiredCombo
+        text: "*"
+        color: "red"
+        visible: false
+    }
 
     ComboBox {
         id: typeCombo
@@ -93,6 +100,13 @@ ColumnLayout {
             }
         }
     }    
+}
+    Label {
+        id: requiredField
+        text: "Required fields!"
+        color: "red"
+        visible: false;
+    }
 
     TextField {
         id: artistField
@@ -125,21 +139,49 @@ ColumnLayout {
             text: "Save"
             onClicked: {
 
-                if(root.code < 0) {
-                   root.code = myDb.addEvent( root.name, root.date, root.place, root.price,
-                                   root.ticket, root.type, root.artist, root.genre, root.first_dancer,
-                                   root.number_dancers, root.director);
+                if(root.name != "" && root.date != "" && root.place != "" && root.price != "" && root.ticket != ""
+                        && root.type != "") {
+                    requiredField.visible = false;
+                    requiredCombo.visible = false;
+                    if(root.code < 0) {
+                        if(root.type == "Concert") {
+                            root.first_dancer = "";
+                            root.number_dancers = "";
+                            root.director = "";
+                        } else if (root.type == "Show") {
+                            root.first_dancer = "";
+                            root.number_dancers = "";
+                            root.artist = "";
+                            root.genre = "";
+                        } else if (root.type == "Ballet") {
+                            root.artist = "";
+                            root.genre = "";
+                            root.director = "";
+                        }
 
+                       root.code = myDb.addEvent( root.name, root.date, root.place, root.price,
+                                       root.ticket, root.type, root.artist, root.genre, root.first_dancer,
+                                       root.number_dancers, root.director);
+
+                    } else {
+                        myDb.updateEvent(root.index, root.code, root.name, root.date, root.place, root.price,
+                                         root.ticket, root.type, root.artist, root.genre, root.first_dancer,
+                                         root.number_dancers, root.director);
+                    }
+
+                    loadPage.setSource("EventDetails.qml", {"code": code, "name": name, "date": date, "place":place, "price": price,
+                                                            "ticket": ticket, "type": type, "artist": artist, "genre": genre,
+                                                            "first_dancer": first_dancer, "number_dancers": number_dancers,
+                                                            "director": director});
                 } else {
-                    myDb.updateEvent(root.index, root.code, root.name, root.date, root.place, root.price,
-                                     root.ticket, root.type, root.artist, root.genre, root.first_dancer,
-                                     root.number_dancers, root.director);
+                    requiredField.visible = true;
+                    requiredCombo.visible = true;
+                    nameField.color = "red";
+                    dateField.color = "red";
+                    placeField.color = "red";
+                    priceField.color = "red";
+                    ticketField.color = "red";
                 }
-
-                loadPage.setSource("EventDetails.qml", {"code": code, "name": name, "date": date, "place":place, "price": price,
-                                                        "ticket": ticket, "type": type, "artist": artist, "genre": genre,
-                                                        "first_dancer": first_dancer, "number_dancers": number_dancers,
-                                                        "director": director});
             }
         }
         Button {
