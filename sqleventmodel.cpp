@@ -76,7 +76,6 @@ int SqlEventModel::addEvent(const QString &name, const QString &date,
                             const QString &director) {
   QSqlRecord newRecord = record();
   newRecord.setValue("name", name);
-  qDebug() << artist;
   newRecord.setValue("date", date);
   newRecord.setValue("place", place);
   newRecord.setValue("price", price);

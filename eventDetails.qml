@@ -3,7 +3,7 @@ import QtQuick.Controls 2.4
 import QtQuick.Layouts 1.11
 
 ColumnLayout {
-
+    id: root
     property int index
     property alias code : codeLabel.text
     property alias name : nameLabel.text
@@ -18,88 +18,182 @@ ColumnLayout {
     property alias number_dancers: numberDancersLabel.text
     property alias director: directorLabel.text
 
+    RowLayout {
+        Label {
+            text: "code:"
+        }
 
-    Label {
-        id: codeLabel
+        Label {
+            id: codeLabel
+        }
     }
-    Label {
-        id: nameLabel
+    RowLayout {
+        Label {
+            text: "name:"
+        }
+
+        Label {
+            id: nameLabel
+        }
     }
-    Label {
-        id: dateLabel
+    RowLayout {
+        Label {
+            text: "date:"
+        }
+
+        Label {
+            id: dateLabel
+        }
     }
-    Label {
-        id: placeLabel
+    RowLayout {
+        Label {
+            text: "place:"
+        }
+
+        Label {
+            id: placeLabel
+        }
     }
-    Label {
-        id: priceLabel
+    RowLayout {
+
+        Label {
+            text: "price:"
+        }
+
+        Label {
+            id: priceLabel
+        }
+
     }
-    Label {
-        id: ticketLabel
-    }
-    Label {
-        id: typeLabel
+    RowLayout {
+
+        Label {
+            text: "ticket:"
+        }
+
+        Label {
+            id: ticketLabel
+        }
     }
 
-    Label {
-        id: artistLabel
-        Component.onCompleted: {
-            if(artist == "") {
-                artistLabel.visible = false;
+    RowLayout {
+        Label {
+            text: "type:"
+        }
+        Label {
+            id: typeLabel
+        }
+    }
+
+
+    RowLayout {
+        Label {
+            id: artLabel
+            text: "artist:"
+        }
+
+        Label {
+            id: artistLabel
+            Component.onCompleted: {
+                if(root.artist === "") {
+                    artistLabel.visible = false;
+                    artLabel.visible = false;
+                }
             }
         }
     }
-    Label {
-        id: genreLabel
-        Component.onCompleted: {
-            if(genre == "") {
-                genreLabel.visible = false;
-            }
 
+    RowLayout {
+        Label {
+            id: genLabel
+            text: "genre:"
+        }
+
+        Label {
+            id: genreLabel
+            Component.onCompleted: {
+                if(root.genre === "") {
+                    genreLabel.visible = false;
+                    genLabel.visible = false;
+                }
+
+            }
         }
     }
-    Label {
-        id: firstDancerLabel
-        Component.onCompleted: {
-            if(first_dancer == "") {
-                firstDancerLabel.visible = false;
-            }
 
+    RowLayout {
+        Label {
+            id: firstDancLabel
+            text: "first dancer:"
+        }
+
+        Label {
+            id: firstDancerLabel
+            Component.onCompleted: {
+                if(root.first_dancer === "") {
+                    firstDancerLabel.visible = false;
+                    firstDancLabel.visible = false;
+                }
+
+            }
         }
     }
-    Label {
-        id: numberDancersLabel
-        Component.onCompleted: {
-            if(number_dancers == "") {
-                numberDancersLabel.visible = false;
-            }
 
+    RowLayout {
+        Label {
+            id: numDancLabel
+            text: "number of dancers:"
+        }
+
+
+        Label {
+            id: numberDancersLabel
+            Component.onCompleted: {
+                if(root.number_dancers === "") {
+                    numberDancersLabel.visible = false;
+                    numDancLabel.visible = false;
+                }
+
+            }
         }
     }
-    Label {
-        id: directorLabel
-        Component.onCompleted: {
-            if(director == "") {
-                directorLabel.visible = false;
-            }
 
+    RowLayout {
+        Label {
+            id: dirLabel
+            text: "director:"
         }
+
+
+        Label {
+            id: directorLabel
+            Component.onCompleted: {
+                if(root.director === "") {
+                    directorLabel.visible = false;
+                    dirLabel.visible = false;
+                }
+
+            }
+        }
+
     }
+
 
     RowLayout {
         Button {
             id: editButton
             text: "Edit"
-            onClicked:loadPage.setSource("CUeventPage.qml", {"index": index, "code": code, "name": name, "date": date, "place":place, "price": price,
-                                             "ticket": ticket, "type": type, "artist": artist, "genre": genre, "first_dancer": first_dancer,
-                                             "number_dancers": number_dancers, "director": director
+            onClicked:loadPage.setSource("CUeventPage.qml", {"index": root.index, "code": root.code, "name": root.name, "date": root.date,
+                                             "place": root.place, "price": root.price, "ticket": root.ticket, "type": root.type,
+                                             "artist": root.artist, "genre": root.genre, "first_dancer": root.first_dancer,
+                                             "number_dancers": root.number_dancers, "director": root.director
                                          });
         }
 
         Button {
             id: remove
             text: "Remove"
-            onClicked: loadPage.setSource("removeItemPopup.qml", {"index": index});
+            onClicked: loadPage.setSource("removeItemPopup.qml", {"index": root.index});
         }
     }
 

@@ -56,47 +56,87 @@ RowLayout {
         id: typeCombo
         model: ["Concert", "Show", "Ballet"]
         onActivated: {
-            type = currentText;
-            if(type == "Concert"){
+            root.type = currentText;
+            if(root.type === "Concert"){
                 artistField.visible = true;
                 genreField.visible = true;
+
                 firstDancerField.visible = false;
                 numberDancersField.visible = false;
                 directorField.visible = false;
-            } else if (type == "Show") {
+
+                root.first_dancer = "";
+                root.number_dancers = "";
+                root.director = "";
+
+            } else if (root.type === "Show") {
+
+                directorField.visible = true;
+
                 artistField.visible = false;
                 genreField.visible = false;
                 firstDancerField.visible = false;
                 numberDancersField.visible = false;
-                directorField.visible = true;
-            } else if (type == "Ballet") {
-                artistField.visible = false;
-                genreField.visible = false;
+
+                root.artist = "";
+                root.genre = "";
+                root.first_dancer = "";
+                root.number_dancers = "";
+
+            } else if (root.type === "Ballet") {
+
                 firstDancerField.visible = true;
                 numberDancersField.visible = true;
+
+                artistField.visible = false;
+                genreField.visible = false;
                 directorField.visible = false;
+
+                root.artist = "";
+                root.genre = "";
+                root.director = "";
             }
         }
         Component.onCompleted: {
             currentIndex = find(type);
-            if(type == "Concert"){
+            if(root.type === "Concert"){
                 artistField.visible = true;
                 genreField.visible = true;
+
                 firstDancerField.visible = false;
                 numberDancersField.visible = false;
                 directorField.visible = false;
-            } else if (type == "Show") {
+
+                root.first_dancer = "";
+                root.number_dancers = "";
+                root.director = "";
+
+            } else if (root.type === "Show") {
+
+                directorField.visible = true;
+
                 artistField.visible = false;
                 genreField.visible = false;
                 firstDancerField.visible = false;
                 numberDancersField.visible = false;
-                directorField.visible = true;
-            } else if (type == "Ballet") {
-                artistField.visible = false;
-                genreField.visible = false;
+
+                root.artist = "";
+                root.genre = "";
+                root.first_dancer = "";
+                root.number_dancers = "";
+
+            } else if (root.type === "Ballet") {
+
                 firstDancerField.visible = true;
                 numberDancersField.visible = true;
+
+                artistField.visible = false;
+                genreField.visible = false;
                 directorField.visible = false;
+
+                root.artist = "";
+                root.genre = "";
+                root.director = "";
             }
         }
     }    
@@ -144,21 +184,6 @@ RowLayout {
                     requiredField.visible = false;
                     requiredCombo.visible = false;
                     if(root.code < 0) {
-                        if(root.type == "Concert") {
-                            root.first_dancer = "";
-                            root.number_dancers = "";
-                            root.director = "";
-                        } else if (root.type == "Show") {
-                            root.first_dancer = "";
-                            root.number_dancers = "";
-                            root.artist = "";
-                            root.genre = "";
-                        } else if (root.type == "Ballet") {
-                            root.artist = "";
-                            root.genre = "";
-                            root.director = "";
-                        }
-
                        root.code = myDb.addEvent( root.name, root.date, root.place, root.price,
                                        root.ticket, root.type, root.artist, root.genre, root.first_dancer,
                                        root.number_dancers, root.director);
@@ -169,10 +194,10 @@ RowLayout {
                                          root.number_dancers, root.director);
                     }
 
-                    loadPage.setSource("EventDetails.qml", {"code": code, "name": name, "date": date, "place":place, "price": price,
-                                                            "ticket": ticket, "type": type, "artist": artist, "genre": genre,
-                                                            "first_dancer": first_dancer, "number_dancers": number_dancers,
-                                                            "director": director});
+                    loadPage.setSource("EventDetails.qml", {"code": root.code, "name": root.name, "date": root.date, "place": root.place, "price": root.price,
+                                                            "ticket": root.ticket, "type": root.type, "artist": root.artist, "genre": root.genre,
+                                                            "first_dancer": root.first_dancer, "number_dancers": root.number_dancers,
+                                                            "director": root.director});
                 } else {
                     requiredField.visible = true;
                     requiredCombo.visible = true;

@@ -3,7 +3,7 @@ import QtQuick.Dialogs 1.1
 import QtQuick.Controls 2.4
 
 Dialog {
-    id: messageDialog
+    id: root
 
     property int index
 
@@ -19,12 +19,12 @@ Dialog {
     Component.onCompleted: visible = true
 
     onAccepted: {
-        myDb.removeEvent(messageDialog.index, messageDialog.code);
+        myDb.removeEvent(root.index, root.code);
 
-        messageDialog.close();
+        root.close();
     }
     onRejected: {
-        messageDialog.close();
+        root.close();
     }
 
 }
