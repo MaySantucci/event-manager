@@ -23,26 +23,77 @@ ColumnLayout {
         text: root.code
         visible: root.code > 0
     }
-    TextField {
-        id: nameField
-        placeholderText: qsTr("name")
+
+    RowLayout {
+        Label {
+            id: requiredName
+            text: "*"
+            color: "red"
+            visible: false
+        }
+
+        TextField {
+            id: nameField
+            placeholderText: qsTr("name")
+        }
     }
 
-    TextField {
-        id: dateField
-        placeholderText: qsTr("date")
+    RowLayout {
+        Label {
+            id: requiredDate
+            text: "*"
+            color: "red"
+            visible: false
+        }
+
+        TextField {
+            id: dateField
+            placeholderText: qsTr("date")
+        }
     }
-    TextField {
-        id: placeField
-        placeholderText: qsTr("place")
+
+    RowLayout {
+        Label {
+            id: requiredPlace
+            text: "*"
+            color: "red"
+            visible: false
+        }
+
+        TextField {
+            id: placeField
+            placeholderText: qsTr("place")
+        }
     }
-    TextField {
-        id: priceField
-        placeholderText: qsTr("price")
+
+    RowLayout {
+        Label {
+            id: requiredPrice
+            text: "*"
+            color: "red"
+            visible: false
+        }
+
+        TextField {
+            id: priceField
+            placeholderText: qsTr("price")
+        }
+
     }
-    TextField {
-        id: ticketField
-        placeholderText: qsTr("available ticket")
+
+    RowLayout {
+        Label {
+            id: requiredTicket
+            text: "*"
+            color: "red"
+            visible: false
+        }
+
+        TextField {
+            id: ticketField
+            placeholderText: qsTr("available ticket")
+        }
+
     }
 RowLayout {
     Label {
@@ -98,7 +149,7 @@ RowLayout {
             }
         }
         Component.onCompleted: {
-            currentIndex = find(type);
+            currentIndex = find(root.type);
             if(root.type === "Concert"){
                 artistField.visible = true;
                 genreField.visible = true;
@@ -178,11 +229,15 @@ RowLayout {
             id: save
             text: "Save"
             onClicked: {
-
-                if(root.name != "" && root.date != "" && root.place != "" && root.price != "" && root.ticket != ""
-                        && root.type != "") {
+                if(root.name.trim() != "" && root.date.trim() != "" && root.place.trim() != "" && root.price.trim() != "" && root.ticket.trim() != ""
+                        && root.type.trim() != "") {
                     requiredField.visible = false;
                     requiredCombo.visible = false;
+                    requiredName.visible = false;
+                    requiredDate.visible = false;
+                    requiredPlace.visible = false;
+                    requiredPrice.visible = false;
+                    requiredTicket.visible = false;
                     if(root.code < 0) {
                        root.code = myDb.addEvent( root.name, root.date, root.place, root.price,
                                        root.ticket, root.type, root.artist, root.genre, root.first_dancer,
@@ -201,6 +256,11 @@ RowLayout {
                 } else {
                     requiredField.visible = true;
                     requiredCombo.visible = true;
+                    requiredName.visible = true;
+                    requiredDate.visible = true;
+                    requiredPlace.visible = true;
+                    requiredPrice.visible = true;
+                    requiredTicket.visible = true;
                     nameField.color = "red";
                     dateField.color = "red";
                     placeField.color = "red";
