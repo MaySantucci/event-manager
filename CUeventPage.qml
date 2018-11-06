@@ -18,6 +18,9 @@ ColumnLayout {
     property alias number_dancers: numberDancersField.text
     property alias director: directorField.text
 
+
+    signal cancel()
+
     Label {
         id: codeField
         text: root.code
@@ -283,8 +286,8 @@ RowLayout {
                         && root.type.trim() != "") {
                     loadPage.setSource("EventDetails.qml");
                 } else {
-                    console.log("Torna alla pagina iniziale.");
-                }
+                    root.cancel();
+                 }
             }
         }
     }

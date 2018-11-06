@@ -8,7 +8,6 @@ Page {
     id:root
     //Toolbar
 
-
     header:
         ToolBar {
             id: headerBar
@@ -18,7 +17,8 @@ Page {
                 text: qsTr("Add")
                 font.pixelSize: 18
                 onClicked: {
-                    loadPage.setSource("CUeventPage.qml", {"name": "", "date": "", "place": "", "price": "", "ticket": ""});
+                    loadPage.active = true;
+                 loadPage.setSource("CUeventPage.qml", {"name": "", "date": "", "place": "", "price": "", "ticket": ""});
                 }
             }
 
@@ -60,6 +60,7 @@ Page {
                        text: model.name
                        width: listEvents.width - listEvents.leftMargin - listEvents.rightMargin
                        onClicked: {
+                           loadPage.active = true;
                            loadPage.setSource("EventDetails.qml", {"index": index, "code": code, "name": name, "date": date, "place":place,
                                                      "price": price, "ticket": ticket, "type": type_event, "artist": artist, "genre": genre,
                                                      "first_dancer": first_dancer, "number_dancers": number_dancers, "director": director});
@@ -75,13 +76,22 @@ Page {
                Layout.fillHeight: true
                Layout.minimumWidth: 100
 
+
                Loader {
                    id: loadPage
                    anchors.centerIn: parent
                }
-           }
 
+               Connections {
+                   target: loadPage.item
+                   onCancel: {
+                       loadPage.source = "";
+                   }
+               }
+
+           }
     }
+
 
     //footer
 
