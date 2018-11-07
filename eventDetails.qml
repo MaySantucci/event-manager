@@ -13,12 +13,16 @@ ColumnLayout {
     property alias place : placeLabel.text
     property alias price : priceLabel.text
     property alias ticket : ticketLabel.text
-    property alias type : typeLabel.text
+    property int type
     property alias artist: artistLabel.text
     property alias genre: genreLabel.text
     property alias first_dancer: firstDancerLabel.text
     property alias number_dancers: numberDancersLabel.text
     property alias director: directorLabel.text
+
+    EventTypeModel{
+    id:typeModel
+    }
 
     RowLayout {
         Label {
@@ -84,6 +88,10 @@ ColumnLayout {
         }
         Label {
             id: typeLabel
+            text: {
+                var i = typeModel.find(root.type);
+                return typeModel.get(i).text;
+            }
         }
     }
 

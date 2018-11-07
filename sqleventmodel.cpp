@@ -20,7 +20,7 @@ static void createTable() {
                   "   'place' TEXT NOT NULL,"
                   "   'price' TEXT NOT NULL,"
                   "   'ticket' TEXT NOT NULL,"
-                  "   'type_event' TEXT NOT NULL,"
+                  "   'type_event' INTEGER NOT NULL,"
                   "   'artist' TEXT,"
                   "   'genre' TEXT,"
                   "   'first_dancer' TEXT,"

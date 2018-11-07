@@ -25,6 +25,11 @@ Page {
                     loadPage.item.place = "";
                     loadPage.item.price = "";
                     loadPage.item.ticket = "";
+                    loadPage.item.artist = "";
+                    loadPage.item.genre = "";
+                    loadPage.item.first_dancer= "";
+                    loadPage.item.number_dancers = "";
+                    loadPage.item.director = "";
                 }
             }
 

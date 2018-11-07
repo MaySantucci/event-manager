@@ -109,21 +109,9 @@ RowLayout {
     ComboBox {
         id: typeCombo
         textRole: "text"
-        model: ListModel {
-            ListElement {
-                type: SqlEventModel.Concert
-                text: "Concert"
-            }
-            ListElement {
-                type: SqlEventModel.Show
-                text: "Show"
-            }
-            ListElement {
-                type: SqlEventModel.Ballet
-                text: "Ballet"
-            }
+        model: EventTypeModel{
+            id: typeModel
         }
-
         onActivated: {
             root.type = model.get(currentIndex).type;
             if(root.type === SqlEventModel.Concert){
@@ -170,10 +158,11 @@ RowLayout {
         Component.onCompleted: {
             if(root.type === -1) {
                 currentIndex = 0;
-                activated(currentIndex);
             } else {
-                currentIndex = find(root.type);
+                currentIndex = typeModel.find(root.type);
             }
+
+            activated(currentIndex);
         }
     }    
 }
