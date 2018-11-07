@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.4
 import QtQuick.Layouts 1.11
+import QtQml 2.11
 
 import io.qt.example.eventsmanager 1.0
 
@@ -17,8 +18,7 @@ Page {
                 text: qsTr("Add")
                 font.pixelSize: 18
                 onClicked: {
-                    loadPage.active = true;
-                 loadPage.setSource("CUeventPage.qml", {"name": "", "date": "", "place": "", "price": "", "ticket": ""});
+                    loadPage.sourceComponent = eventPageComponent;
                 }
             }
 
@@ -60,11 +60,21 @@ Page {
                        text: model.name
                        width: listEvents.width - listEvents.leftMargin - listEvents.rightMargin
                        onClicked: {
-                           loadPage.active = true;
-                           loadPage.setSource("EventDetails.qml", {"index": index, "code": code, "name": name, "date": date, "place":place,
-                                                     "price": price, "ticket": ticket, "type": type_event, "artist": artist, "genre": genre,
-                                                     "first_dancer": first_dancer, "number_dancers": number_dancers, "director": director});
-                       }
+                           loadPage.sourceComponent = eventDetailsComponent;
+                           loadPage.item.index = index;
+                           loadPage.item.code = code;
+                           loadPage.item.name = name;
+                           loadPage.item.date = date;
+                           loadPage.item.place = place;
+                           loadPage.item.price = price;
+                           loadPage.item.ticket = ticket;
+                           loadPage.item.type = type_event;
+                           loadPage.item.artist = artist;
+                           loadPage.item.genre = genre;
+                           loadPage.item.first_dancer = first_dancer;
+                           loadPage.item.number_dancers = number_dancers;
+                           loadPage.item.director = director;
+                        }
                    }
                }
            }
@@ -82,13 +92,21 @@ Page {
                    anchors.centerIn: parent
                }
 
-               Connections {
-                   target: loadPage.item
-                   onCancel: {
-                       loadPage.source = "";
+               Component {
+                   id: eventPageComponent
+                   CUeventPage {
+                       id: pageReal
+                       name: name
+                        onCancel: loadPage.sourceComponent = null;
                    }
                }
 
+               Component {
+                   id: eventDetailsComponent
+                   EventDetails {
+                       id: detailsPageReal
+                   }
+               }
            }
     }
 

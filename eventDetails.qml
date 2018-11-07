@@ -87,6 +87,7 @@ ColumnLayout {
 
 
     RowLayout {
+        visible: root.type === "Concert"
         Label {
             id: artLabel
             text: "artist:"
@@ -94,16 +95,11 @@ ColumnLayout {
 
         Label {
             id: artistLabel
-            Component.onCompleted: {
-                if(root.artist === "") {
-                    artistLabel.visible = false;
-                    artLabel.visible = false;
-                }
-            }
         }
     }
 
     RowLayout {
+        visible: root.type === "Concert"
         Label {
             id: genLabel
             text: "genre:"
@@ -111,17 +107,11 @@ ColumnLayout {
 
         Label {
             id: genreLabel
-            Component.onCompleted: {
-                if(root.genre === "") {
-                    genreLabel.visible = false;
-                    genLabel.visible = false;
-                }
-
-            }
         }
     }
 
     RowLayout {
+        visible: root.type === "Ballet"
         Label {
             id: firstDancLabel
             text: "first dancer:"
@@ -129,17 +119,11 @@ ColumnLayout {
 
         Label {
             id: firstDancerLabel
-            Component.onCompleted: {
-                if(root.first_dancer === "") {
-                    firstDancerLabel.visible = false;
-                    firstDancLabel.visible = false;
-                }
-
-            }
         }
     }
 
     RowLayout {
+        visible: root.type === "Ballet"
         Label {
             id: numDancLabel
             text: "number of dancers:"
@@ -148,17 +132,11 @@ ColumnLayout {
 
         Label {
             id: numberDancersLabel
-            Component.onCompleted: {
-                if(root.number_dancers === "") {
-                    numberDancersLabel.visible = false;
-                    numDancLabel.visible = false;
-                }
-
-            }
         }
     }
 
     RowLayout {
+        visible: root.type === "Show"
         Label {
             id: dirLabel
             text: "director:"
@@ -167,13 +145,6 @@ ColumnLayout {
 
         Label {
             id: directorLabel
-            Component.onCompleted: {
-                if(root.director === "") {
-                    directorLabel.visible = false;
-                    dirLabel.visible = false;
-                }
-
-            }
         }
 
     }
