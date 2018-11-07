@@ -18,7 +18,13 @@ Page {
                 text: qsTr("Add")
                 font.pixelSize: 18
                 onClicked: {
-                    loadPage.sourceComponent = eventPageComponent;
+                    loadPage.sourceComponent = cuEventComponent;
+                    loadPage.item.code = -1;
+                    loadPage.item.name = "";
+                    loadPage.item.date = "";
+                    loadPage.item.place = "";
+                    loadPage.item.price = "";
+                    loadPage.item.ticket = "";
                 }
             }
 
@@ -93,7 +99,7 @@ Page {
                }
 
                Component {
-                   id: eventPageComponent
+                   id: cuEventComponent
                    CUeventPage {
                        id: pageReal
                        name: name

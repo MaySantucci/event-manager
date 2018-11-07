@@ -11,7 +11,7 @@ ColumnLayout {
     property alias place : placeField.text
     property alias price : priceField.text
     property alias ticket : ticketField.text
-    property string type : ""
+    property int type: -1
     property alias artist: artistField.text
     property alias genre: genreField.text
     property alias first_dancer: firstDancerField.text
@@ -108,10 +108,25 @@ RowLayout {
 
     ComboBox {
         id: typeCombo
-        model: ["Concert", "Show", "Ballet"]
+        textRole: "text"
+        model: ListModel {
+            ListElement {
+                type: SqlEventModel.Concert
+                text: "Concert"
+            }
+            ListElement {
+                type: SqlEventModel.Show
+                text: "Show"
+            }
+            ListElement {
+                type: SqlEventModel.Ballet
+                text: "Ballet"
+            }
+        }
+
         onActivated: {
-            root.type = currentText;
-            if(root.type === "Concert"){
+            root.type = model.get(currentIndex).type;
+            if(root.type === SqlEventModel.Concert){
                 artistField.visible = true;
                 genreField.visible = true;
 
@@ -123,7 +138,7 @@ RowLayout {
                 root.number_dancers = "";
                 root.director = "";
 
-            } else if (root.type === "Show") {
+            } else if (root.type === SqlEventModel.Show) {
 
                 directorField.visible = true;
 
@@ -137,7 +152,7 @@ RowLayout {
                 root.first_dancer = "";
                 root.number_dancers = "";
 
-            } else if (root.type === "Ballet") {
+            } else if (root.type === SqlEventModel.Ballet) {
 
                 firstDancerField.visible = true;
                 numberDancersField.visible = true;
@@ -151,52 +166,13 @@ RowLayout {
                 root.director = "";
             }
         }
+
         Component.onCompleted: {
-            if(root.type === "") {
-                currentIndex = typeCombo.find("Concert");
+            if(root.type === -1) {
+                currentIndex = 0;
                 activated(currentIndex);
             } else {
                 currentIndex = find(root.type);
-            }
-
-            if(root.type === "Concert"){
-                artistField.visible = true;
-                genreField.visible = true;
-
-                firstDancerField.visible = false;
-                numberDancersField.visible = false;
-                directorField.visible = false;
-
-                root.first_dancer = "";
-                root.number_dancers = "";
-                root.director = "";
-
-            } else if (root.type === "Show") {
-
-                directorField.visible = true;
-
-                artistField.visible = false;
-                genreField.visible = false;
-                firstDancerField.visible = false;
-                numberDancersField.visible = false;
-
-                root.artist = "";
-                root.genre = "";
-                root.first_dancer = "";
-                root.number_dancers = "";
-
-            } else if (root.type === "Ballet") {
-
-                firstDancerField.visible = true;
-                numberDancersField.visible = true;
-
-                artistField.visible = false;
-                genreField.visible = false;
-                directorField.visible = false;
-
-                root.artist = "";
-                root.genre = "";
-                root.director = "";
             }
         }
     }    
@@ -238,8 +214,8 @@ RowLayout {
             id: save
             text: "Save"
             onClicked: {
-                if(root.name.trim() != "" && root.date.trim() != "" && root.place.trim() != "" && root.price.trim() != "" && root.ticket.trim() != ""
-                        && root.type.trim() != "") {
+                if(root.name.trim() !== "" && root.date.trim() !== "" && root.place.trim() !== "" && root.price.trim() !== ""
+                        && root.ticket.trim() !== "") {
                     requiredField.visible = false;
                     requiredCombo.visible = false;
                     requiredName.visible = false;
@@ -248,9 +224,10 @@ RowLayout {
                     requiredPrice.visible = false;
                     requiredTicket.visible = false;
                     if(root.code < 0) {
-                       root.code = myDb.addEvent( root.name, root.date, root.place, root.price,
-                                       root.ticket, root.type, root.artist, root.genre, root.first_dancer,
-                                       root.number_dancers, root.director);
+                         root.code = myDb.addEvent( root.name, root.date, root.place, root.price,
+                                        root.ticket, root.type, root.artist, root.genre, root.first_dancer,
+                                        root.number_dancers, root.director);
+                        console.log(root.code);
 
                     } else {
                         myDb.updateEvent(root.index, root.code, root.name, root.date, root.place, root.price,
@@ -282,8 +259,8 @@ RowLayout {
             id: undo
             text: "Cancel"
             onClicked: {
-                if(root.name.trim() != "" && root.date.trim() != "" && root.place.trim() != "" && root.price.trim() != "" && root.ticket.trim() != ""
-                        && root.type.trim() != "") {
+                if(root.name.trim() !== "" && root.date.trim() !== "" && root.place.trim() !== "" && root.price.trim() !== ""
+                        && root.ticket.trim() !== "") {
                     loadPage.setSource("EventDetails.qml");
                 } else {
                     root.cancel();

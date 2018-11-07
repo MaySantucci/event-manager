@@ -2,6 +2,8 @@ import QtQuick 2.0
 import QtQuick.Controls 2.4
 import QtQuick.Layouts 1.11
 
+import io.qt.example.eventsmanager 1.0
+
 ColumnLayout {
     id: root
     property int index
@@ -87,7 +89,7 @@ ColumnLayout {
 
 
     RowLayout {
-        visible: root.type === "Concert"
+        visible: root.type === SqlEventModel.Concert
         Label {
             id: artLabel
             text: "artist:"
@@ -99,7 +101,7 @@ ColumnLayout {
     }
 
     RowLayout {
-        visible: root.type === "Concert"
+        visible: root.type === SqlEventModel.Concert
         Label {
             id: genLabel
             text: "genre:"
@@ -111,7 +113,7 @@ ColumnLayout {
     }
 
     RowLayout {
-        visible: root.type === "Ballet"
+        visible: root.type === SqlEventModel.Ballet
         Label {
             id: firstDancLabel
             text: "first dancer:"
@@ -123,7 +125,7 @@ ColumnLayout {
     }
 
     RowLayout {
-        visible: root.type === "Ballet"
+        visible: root.type === SqlEventModel.Ballet
         Label {
             id: numDancLabel
             text: "number of dancers:"
@@ -136,7 +138,7 @@ ColumnLayout {
     }
 
     RowLayout {
-        visible: root.type === "Show"
+        visible: root.type === SqlEventModel.Show
         Label {
             id: dirLabel
             text: "director:"

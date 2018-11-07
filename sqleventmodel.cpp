@@ -69,12 +69,13 @@ QHash<int, QByteArray> SqlEventModel::roleNames() const {
 
 int SqlEventModel::addEvent(const QString &name, const QString &date,
                             const QString &place, const QString &price,
-                            const QString &ticket, const QString &type_event,
+                            const QString &ticket, const TypeEvent &type_event,
                             const QString &artist, const QString &genre,
                             const QString &first_dancer,
                             const QString &number_dancers,
                             const QString &director) {
   QSqlRecord newRecord = record();
+  qDebug() << "TypeEvent " << type_event;
   newRecord.setValue("name", name);
   newRecord.setValue("date", date);
   newRecord.setValue("place", place);
@@ -106,7 +107,7 @@ int SqlEventModel::addEvent(const QString &name, const QString &date,
 void SqlEventModel::updateEvent(int index, const int &code, const QString &name,
                                 const QString &date, const QString &place,
                                 const QString &price, const QString &ticket,
-                                const QString &type_event,
+                                const TypeEvent &type_event,
                                 const QString &artist, const QString &genre,
                                 const QString &first_dancer,
                                 const QString &number_dancers,
