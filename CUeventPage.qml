@@ -40,6 +40,7 @@ ColumnLayout {
         TextField {
             id: nameField
             placeholderText: qsTr("name")
+            text: root.name
         }
     }
 
@@ -54,6 +55,7 @@ ColumnLayout {
         TextField {
             id: dateField
             placeholderText: qsTr("date")
+            text: root.date
         }
     }
 
@@ -68,6 +70,7 @@ ColumnLayout {
         TextField {
             id: placeField
             placeholderText: qsTr("place")
+            text: root.place
         }
     }
 
@@ -76,12 +79,13 @@ ColumnLayout {
             id: requiredPrice
             text: "*"
             color: "red"
-            visible: false
+            visible: false           
         }
 
         TextField {
             id: priceField
             placeholderText: qsTr("price")
+            text: root.price
         }
 
     }
@@ -97,6 +101,7 @@ ColumnLayout {
         TextField {
             id: ticketField
             placeholderText: qsTr("available ticket")
+            text: root.ticket
         }
 
     }
@@ -178,26 +183,31 @@ RowLayout {
     TextField {
         id: artistField
         placeholderText: qsTr("artist")
+        text: root.artist
         visible: false
     }
     TextField {
         id: genreField
         placeholderText: qsTr("genre")
+        text: root.genre
         visible: false
     }
     TextField {
         id: firstDancerField
         placeholderText: qsTr("first dancer")
+        text: root.first_dancer
         visible: false
     }
     TextField {
         id: numberDancersField
         placeholderText: qsTr("number dancers")
+        text: root.number_dancers
         visible: false
     }
     TextField {
         id: directorField
         placeholderText: qsTr("director")
+        text: root.director
         visible: false
     }
     RowLayout {
@@ -251,18 +261,10 @@ RowLayout {
             id: undo
             text: "Cancel"
             onClicked: {
-                if(root.code >= 0 && root.name.trim() !== "" && root.date.trim() !== "" && root.place.trim() !== "" && root.price.trim() !== ""
-                        && root.ticket.trim() !== "" && root.type >= 0) {
-                    console.log("Cancel: field full.");
-
-                    root.details(root.code, root.name, root.date, root.place, root.price, root.ticket, root.type, root.artist,
-                                 root.genre, root.first_dancer, root.number_dancers, root.director);
-                } else {
                     console.log("Cancel: field empty");
                     root.cancel();
                 }
             }
-        }
     }
 }
 
