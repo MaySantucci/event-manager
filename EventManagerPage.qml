@@ -25,6 +25,7 @@ Page {
                     loadPage.item.place = "";
                     loadPage.item.price = "";
                     loadPage.item.ticket = "";
+                    loadPage.item.type = 0;
                     loadPage.item.artist = "";
                     loadPage.item.genre = "";
                     loadPage.item.first_dancer= "";
@@ -138,7 +139,7 @@ Page {
                    EventDetails {
                        id: detailsPageReal
                        onEdit: {
-                               console.log("on edit");
+                               console.log("on edit: " + loadPage.item.type);
                                loadPage.sourceComponent = cuEventComponent;
 
                                loadPage.item.code = code;

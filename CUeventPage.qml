@@ -11,7 +11,7 @@ ColumnLayout {
     property alias place : placeField.text
     property alias price : priceField.text
     property alias ticket : ticketField.text
-    property int type: -1
+    property int type: 0
     property alias artist: artistField.text
     property alias genre: genreField.text
     property alias first_dancer: firstDancerField.text
@@ -25,7 +25,7 @@ ColumnLayout {
 
     Label {
         id: codeField
-        text: root.code
+        text: root.code + " " + root.type
         visible: root.code > 0
     }
 
@@ -40,7 +40,6 @@ ColumnLayout {
         TextField {
             id: nameField
             placeholderText: qsTr("name")
-            text: root.name
         }
     }
 
@@ -55,7 +54,6 @@ ColumnLayout {
         TextField {
             id: dateField
             placeholderText: qsTr("date")
-            text: root.date
         }
     }
 
@@ -70,7 +68,6 @@ ColumnLayout {
         TextField {
             id: placeField
             placeholderText: qsTr("place")
-            text: root.place
         }
     }
 
@@ -85,7 +82,6 @@ ColumnLayout {
         TextField {
             id: priceField
             placeholderText: qsTr("price")
-            text: root.price
         }
 
     }
@@ -101,7 +97,6 @@ ColumnLayout {
         TextField {
             id: ticketField
             placeholderText: qsTr("available ticket")
-            text: root.ticket
         }
 
     }
@@ -119,8 +114,10 @@ RowLayout {
         model: EventTypeModel{
             id: typeModel
         }
-        onActivated: {
-            root.type = model.get(currentIndex).type;
+
+        currentIndex: model.get(root.type).type
+
+        onCurrentIndexChanged: {
             if(root.type === SqlEventModel.Concert){
                 artistField.visible = true;
                 genreField.visible = true;
@@ -161,16 +158,6 @@ RowLayout {
                 root.director = "";
             }
         }
-
-        Component.onCompleted: {
-            if(root.type === -1) {
-                currentIndex = 0;
-            } else {
-                currentIndex = typeModel.find(root.type);
-            }
-
-            activated(currentIndex);
-        }
     }    
 }
     Label {
@@ -183,7 +170,6 @@ RowLayout {
     TextField {
         id: artistField
         placeholderText: qsTr("artist")
-        text: root.artist
         visible: false
     }
     TextField {
@@ -195,7 +181,6 @@ RowLayout {
     TextField {
         id: firstDancerField
         placeholderText: qsTr("first dancer")
-        text: root.first_dancer
         visible: false
     }
     TextField {
@@ -207,7 +192,6 @@ RowLayout {
     TextField {
         id: directorField
         placeholderText: qsTr("director")
-        text: root.director
         visible: false
     }
     RowLayout {

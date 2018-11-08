@@ -170,6 +170,7 @@ ColumnLayout {
             id: editButton
             text: "Edit"
             onClicked: {
+                console.log(root.type);
                 root.edit(root.code, root.name, root.date, root.place, root.price, root.ticket, root.type, root.artist,
                              root.genre, root.first_dancer, root.number_dancers, root.director);
             }
