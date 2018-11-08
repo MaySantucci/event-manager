@@ -19,7 +19,9 @@ ColumnLayout {
     property alias director: directorField.text
 
 
-    signal cancel()
+    signal cancel();
+    signal details(int code, string name, string date, string place, string price, string ticket, int type, string artist, string genre, string dancer,
+                   string dancers, string director);
 
     Label {
         id: codeField
@@ -224,10 +226,11 @@ RowLayout {
                                          root.number_dancers, root.director);
                     }
 
-                    loadPage.setSource("EventDetails.qml", {"code": root.code, "name": root.name, "date": root.date, "place": root.place, "price": root.price,
-                                                            "ticket": root.ticket, "type": root.type, "artist": root.artist, "genre": root.genre,
-                                                            "first_dancer": root.first_dancer, "number_dancers": root.number_dancers,
-                                                            "director": root.director});
+                    console.log("Update done.");
+
+                    root.details(root.code, root.name, root.date, root.place, root.price, root.ticket, root.type, root.artist,
+                                 root.genre, root.first_dancer, root.number_dancers, root.director);
+
                 } else {
                     requiredField.visible = true;
                     requiredCombo.visible = true;
@@ -248,12 +251,16 @@ RowLayout {
             id: undo
             text: "Cancel"
             onClicked: {
-                if(root.name.trim() !== "" && root.date.trim() !== "" && root.place.trim() !== "" && root.price.trim() !== ""
-                        && root.ticket.trim() !== "") {
-                    loadPage.setSource("EventDetails.qml");
+                if(root.code >= 0 && root.name.trim() !== "" && root.date.trim() !== "" && root.place.trim() !== "" && root.price.trim() !== ""
+                        && root.ticket.trim() !== "" && root.type >= 0) {
+                    console.log("Cancel: field full.");
+
+                    root.details(root.code, root.name, root.date, root.place, root.price, root.ticket, root.type, root.artist,
+                                 root.genre, root.first_dancer, root.number_dancers, root.director);
                 } else {
+                    console.log("Cancel: field empty");
                     root.cancel();
-                 }
+                }
             }
         }
     }

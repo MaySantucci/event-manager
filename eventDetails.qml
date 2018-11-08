@@ -20,6 +20,11 @@ ColumnLayout {
     property alias number_dancers: numberDancersLabel.text
     property alias director: directorLabel.text
 
+
+    signal edit(int code, string name, string date, string place, string price, string ticket, int type, string artist, string genre, string dancer,
+                   string dancers, string director);
+    signal remove(int index);
+
     EventTypeModel{
     id:typeModel
     }
@@ -164,17 +169,16 @@ ColumnLayout {
         Button {
             id: editButton
             text: "Edit"
-            onClicked:loadPage.setSource("CUeventPage.qml", {"index": root.index, "code": root.code, "name": root.name, "date": root.date,
-                                             "place": root.place, "price": root.price, "ticket": root.ticket, "type": root.type,
-                                             "artist": root.artist, "genre": root.genre, "first_dancer": root.first_dancer,
-                                             "number_dancers": root.number_dancers, "director": root.director
-                                         });
+            onClicked: {
+                root.edit(root.code, root.name, root.date, root.place, root.price, root.ticket, root.type, root.artist,
+                             root.genre, root.first_dancer, root.number_dancers, root.director);
+            }
         }
 
         Button {
             id: remove
             text: "Remove"
-            onClicked: loadPage.setSource("removeItemPopup.qml", {"index": root.index});
+            onClicked: root.remove(root.index);
         }
     }
 

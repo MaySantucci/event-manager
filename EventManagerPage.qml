@@ -106,9 +106,30 @@ Page {
                Component {
                    id: cuEventComponent
                    CUeventPage {
-                       id: pageReal
-                       name: name
+                        id: pageReal
                         onCancel: loadPage.sourceComponent = null;
+                        onDetails: {
+                            console.log("on details");
+                            loadPage.sourceComponent = eventDetailsComponent;
+
+                            loadPage.item.code = code;
+                            loadPage.item.name = name;
+                            loadPage.item.date = date;
+                            loadPage.item.place = place;
+                            loadPage.item.price = price;
+                            loadPage.item.ticket = ticket;
+                            loadPage.item.type = type;
+                            loadPage.item.artist = artist;
+                            loadPage.item.genre = genre;
+                            loadPage.item.first_dancer = dancer;
+                            loadPage.item.number_dancers = dancers;
+                            loadPage.item.director = director;
+
+
+                            console.log(code + " " + name + " " + date + " " + place + " " + price + " " + ticket + " " +
+                                        type + " " + artist + " " + genre + " " + dancer + " " + dancers +
+                                        " " + director);
+                        }
                    }
                }
 
@@ -116,6 +137,32 @@ Page {
                    id: eventDetailsComponent
                    EventDetails {
                        id: detailsPageReal
+                       onEdit: {
+                               console.log("on edit");
+                               loadPage.sourceComponent = cuEventComponent;
+
+                               loadPage.item.code = code;
+                               loadPage.item.name = name;
+                               loadPage.item.date = date;
+                               loadPage.item.place = place;
+                               loadPage.item.price = price;
+                               loadPage.item.ticket = ticket;
+                               loadPage.item.type = type;
+                               loadPage.item.artist = artist;
+                               loadPage.item.genre = genre;
+                               loadPage.item.first_dancer = dancer;
+                               loadPage.item.number_dancers = dancers;
+                               loadPage.item.director = director;
+
+
+                               console.log(code + " " + name + " " + date + " " + place + " " + price + " " + ticket + " " +
+                                           type + " " + artist + " " + genre + " " + dancer + " " + dancers +
+                                           " " + director);
+                           }
+                       onRemove: {
+                           loadPage.source = "removeItemPopup.qml";
+                           loadPage.item.index = index;
+                       }
                    }
                }
            }
