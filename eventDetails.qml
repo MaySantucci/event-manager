@@ -7,12 +7,12 @@ import io.qt.example.eventsmanager 1.0
 ColumnLayout {
     id: root
     property int index
-    property alias code : codeLabel.text
-    property alias name : nameLabel.text
-    property alias date : dateLabel.text
-    property alias place : placeLabel.text
-    property alias price : priceLabel.text
-    property alias ticket : ticketLabel.text
+    property alias code: codeLabel.text
+    property alias name: nameLabel.text
+    property alias date: dateLabel.text
+    property alias place: placeLabel.text
+    property alias price: priceLabel.text
+    property alias ticket: ticketLabel.text
     property int type
     property alias artist: artistLabel.text
     property alias genre: genreLabel.text
@@ -20,13 +20,11 @@ ColumnLayout {
     property alias number_dancers: numberDancersLabel.text
     property alias director: directorLabel.text
 
+    signal edit(int code, string name, string date, string place, string price, string ticket, int type, string artist, string genre, string dancer, string dancers, string director)
+    signal remove(int index)
 
-    signal edit(int code, string name, string date, string place, string price, string ticket, int type, string artist, string genre, string dancer,
-                   string dancers, string director);
-    signal remove(int index);
-
-    EventTypeModel{
-    id:typeModel
+    EventTypeModel {
+        id: typeModel
     }
 
     RowLayout {
@@ -74,7 +72,6 @@ ColumnLayout {
         Label {
             id: priceLabel
         }
-
     }
     RowLayout {
 
@@ -99,7 +96,6 @@ ColumnLayout {
             }
         }
     }
-
 
     RowLayout {
         visible: root.type === SqlEventModel.Concert
@@ -144,7 +140,6 @@ ColumnLayout {
             text: "number of dancers:"
         }
 
-
         Label {
             id: numberDancersLabel
         }
@@ -157,32 +152,27 @@ ColumnLayout {
             text: "director:"
         }
 
-
         Label {
             id: directorLabel
         }
-
     }
-
 
     RowLayout {
         Button {
             id: editButton
             text: "Edit"
             onClicked: {
-                console.log(root.type);
-                root.edit(root.code, root.name, root.date, root.place, root.price, root.ticket, root.type, root.artist,
-                             root.genre, root.first_dancer, root.number_dancers, root.director);
+                root.edit(root.code, root.name, root.date, root.place,
+                          root.price, root.ticket, root.type, root.artist,
+                          root.genre, root.first_dancer, root.number_dancers,
+                          root.director)
             }
         }
 
         Button {
             id: remove
             text: "Remove"
-            onClicked: root.remove(root.index);
+            onClicked: root.remove(root.index)
         }
     }
-
 }
-
-

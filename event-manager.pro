@@ -33,8 +33,8 @@ DISTFILES += \
     EventManagerPage.qml \
     EventDetails.qml \
     CUeventPage.qml \
-    removeItemPopup.qml \
-    EventTypeModel.qml
+    EventTypeModel.qml \
+    RemoveItemPopup.qml
 
 HEADERS += \
     sqleventmodel.h

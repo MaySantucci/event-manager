@@ -6,18 +6,21 @@ ColumnLayout {
     id: root
     property int index
     property int code: -1
-    property alias name: nameField.text
-    property alias date : dateField.text
-    property alias place : placeField.text
-    property alias price : priceField.text
-    property alias ticket : ticketField.text
+    property string name
+    property string date
+    property string place
+    property string price
+    property string ticket
     property int type: 0
-    property alias artist: artistField.text
-    property alias genre: genreField.text
-    property alias first_dancer: firstDancerField.text
-    property alias number_dancers: numberDancersField.text
-    property alias director: directorField.text
+    property string artist
+    property string genre
+    property string first_dancer
+    property string number_dancers
+    property string director
 
+    QtObject {
+
+    }
 
     signal cancel();
     signal details(int code, string name, string date, string place, string price, string ticket, int type, string artist, string genre, string dancer,
@@ -25,7 +28,7 @@ ColumnLayout {
 
     Label {
         id: codeField
-        text: root.code + " " + root.type
+        text: root.code
         visible: root.code > 0
     }
 
@@ -40,6 +43,7 @@ ColumnLayout {
         TextField {
             id: nameField
             placeholderText: qsTr("name")
+            text: root.name
         }
     }
 
@@ -54,6 +58,7 @@ ColumnLayout {
         TextField {
             id: dateField
             placeholderText: qsTr("date")
+            text: root.date
         }
     }
 
@@ -68,6 +73,7 @@ ColumnLayout {
         TextField {
             id: placeField
             placeholderText: qsTr("place")
+            text: root.place
         }
     }
 
@@ -82,6 +88,7 @@ ColumnLayout {
         TextField {
             id: priceField
             placeholderText: qsTr("price")
+            text: root.price
         }
 
     }
@@ -97,6 +104,7 @@ ColumnLayout {
         TextField {
             id: ticketField
             placeholderText: qsTr("available ticket")
+            text: root.ticket
         }
 
     }
@@ -115,9 +123,10 @@ RowLayout {
             id: typeModel
         }
 
-        currentIndex: model.get(root.type).type
+        currentIndex:  model.get(root.type).type;
 
         onCurrentIndexChanged: {
+            root.type = currentIndex;
             if(root.type === SqlEventModel.Concert){
                 artistField.visible = true;
                 genreField.visible = true;
@@ -158,6 +167,7 @@ RowLayout {
                 root.director = "";
             }
         }
+
     }    
 }
     Label {
@@ -171,36 +181,39 @@ RowLayout {
         id: artistField
         placeholderText: qsTr("artist")
         visible: false
+        text: root.artist
     }
     TextField {
         id: genreField
         placeholderText: qsTr("genre")
-        text: root.genre
         visible: false
+        text: root.genre
     }
     TextField {
         id: firstDancerField
         placeholderText: qsTr("first dancer")
         visible: false
+        text: root.first_dancer
     }
     TextField {
         id: numberDancersField
         placeholderText: qsTr("number dancers")
-        text: root.number_dancers
         visible: false
+        text: root.number_dancers
     }
     TextField {
         id: directorField
         placeholderText: qsTr("director")
         visible: false
+        text: root.director
     }
     RowLayout {
         Button {
             id: save
             text: "Save"
             onClicked: {
-                if(root.name.trim() !== "" && root.date.trim() !== "" && root.place.trim() !== "" && root.price.trim() !== ""
-                        && root.ticket.trim() !== "") {
+                if(nameField.text.trim().length > 0 && dateField.text.trim().length > 0 && placeField.text.trim().length > 0 &&
+                   priceField.text.trim().length > 0 && ticketField.text.trim().length > 0) {
                     requiredField.visible = false;
                     requiredCombo.visible = false;
                     requiredName.visible = false;
@@ -209,21 +222,25 @@ RowLayout {
                     requiredPrice.visible = false;
                     requiredTicket.visible = false;
                     if(root.code < 0) {
-                         root.code = myDb.addEvent( root.name, root.date, root.place, root.price,
-                                        root.ticket, root.type, root.artist, root.genre, root.first_dancer,
-                                        root.number_dancers, root.director);
-                        console.log(root.code);
-
+                        root.code = myDb.addEvent(nameField.text.trim(), dateField.text.trim(), placeField.text.trim(),
+                                                  priceField.text.trim(), ticketField.text.trim(), root.type, artistField.text.trim(),
+                                                  genreField.text.trim(), firstDancerField.text.trim(), numberDancersField.text.trim(),
+                                                  directorField.text.trim());
                     } else {
-                        myDb.updateEvent(root.index, root.code, root.name, root.date, root.place, root.price,
-                                         root.ticket, root.type, root.artist, root.genre, root.first_dancer,
-                                         root.number_dancers, root.director);
+                        if(nameField.text.trim().length > 0 && dateField.text.trim().length > 0 && placeField.text.trim().length > 0 &&
+                           priceField.text.trim().length > 0 && ticketField.text.trim().length > 0) {
+
+                            myDb.updateEvent(root.index, root.code, nameField.text.trim(), dateField.text.trim(), placeField.text.trim(),
+                                             priceField.text.trim(), ticketField.text.trim(), root.type, artistField.text.trim(),
+                                             genreField.text.trim(), firstDancerField.text.trim(), numberDancersField.text.trim(),
+                                             directorField.text.trim());
+                        }
                     }
 
-                    console.log("Update done.");
-
-                    root.details(root.code, root.name, root.date, root.place, root.price, root.ticket, root.type, root.artist,
-                                 root.genre, root.first_dancer, root.number_dancers, root.director);
+                    root.details(root.code, nameField.text.trim(), dateField.text.trim(), placeField.text.trim(),
+                                 priceField.text.trim(), ticketField.text.trim(), root.type, artistField.text.trim(),
+                                 genreField.text.trim(), firstDancerField.text.trim(), numberDancersField.text.trim(),
+                                 directorField.text.trim());
 
                 } else {
                     requiredField.visible = true;
@@ -241,14 +258,22 @@ RowLayout {
                 }
             }
         }
+
         Button {
             id: undo
             text: "Cancel"
             onClicked: {
-                    console.log("Cancel: field empty");
+                if(nameField.text.trim().length > 0 && dateField.text.trim().length > 0 && placeField.text.trim().length > 0 &&
+                   priceField.text.trim().length > 0 && ticketField.text.trim().length > 0) {
+                    root.details(root.code, root.name, root.date, root.place, root.price,
+                                 root.ticket, root.type, root.artist, root.genre, root.first_dancer,
+                                 root.number_dancers, root.director);
+                } else {
                     root.cancel();
                 }
+
             }
+        }
     }
 }
 

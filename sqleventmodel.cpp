@@ -52,8 +52,8 @@ QVariant SqlEventModel::data(const QModelIndex &index, int role) const {
 
 QHash<int, QByteArray> SqlEventModel::roleNames() const {
   QHash<int, QByteArray> names;
-  names[Qt::UserRole] = "code";
-  names[Qt::UserRole + 1] = "name";
+  names[CodeRole] = "code";
+  names[NameRole] = "name";
   names[Qt::UserRole + 2] = "date";
   names[Qt::UserRole + 3] = "place";
   names[Qt::UserRole + 4] = "price";
@@ -155,4 +155,8 @@ void SqlEventModel::removeEvent(int index) {
   }
   endRemoveRows();
   submitAll();
+}
+
+QString SqlEventModel::get(int index, int code) {
+  return data(this->index(index, 0), EventRole(code)).value<QString>();
 }

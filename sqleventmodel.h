@@ -3,6 +3,7 @@
 
 #include <QFile>
 #include <QMetaEnum>
+#include <QSqlRecord>
 #include <QtSql/QSqlTableModel>
 
 class SqlEventModel : public QSqlTableModel {
@@ -15,6 +16,23 @@ public:
   enum TypeEvent { Concert, Show, Ballet };
 
   Q_ENUM(TypeEvent)
+
+  enum EventRole {
+    CodeRole = Qt::UserRole,
+    NameRole,
+    DateRole,
+    PlaceRole,
+    PriceRole,
+    TicketRole,
+    TypeEventRole,
+    ArtistRole,
+    GenreRole,
+    FirstDancerRole,
+    NumberDancersRole,
+    DirectorRole
+  };
+
+  Q_ENUM(EventRole)
 
   Q_INVOKABLE int addEvent(const QString &name, const QString &date,
                            const QString &place, const QString &price,
@@ -34,6 +52,8 @@ public:
                                const QString &director);
 
   Q_INVOKABLE void removeEvent(int index);
+
+  Q_INVOKABLE QString get(int index, int role);
 };
 
 #endif // SQLEVENTMODEL_H
